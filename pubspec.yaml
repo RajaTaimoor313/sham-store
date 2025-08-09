@@ -1,0 +1,45 @@
+name: flutter_shamstore
+description: "A new Flutter project."
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  carousel_slider: ^5.1.1
+  equatable: ^2.0.5
+  material_design_icons_flutter: ^7.0.7296
+  skeletonizer: ^2.0.1
+  infinite_scroll_pagination: ^5.1.0
+  animated_bottom_navigation_bar: ^1.4.0
+  fancy_shimmer_image: ^2.0.3
+  flutter_bloc: ^9.1.1
+  flutter_svg: ^2.0.9
+  intl: ^0.20.2
+  flutter_native_splash: ^2.4.6
+  flutter_screenutil: ^5.9.3
+  freezed: ^3.0.6
+  flutter_lints: ^5.0.0
+  cupertino_icons: ^1.0.8
+
+  http: ^1.4.0
+  shared_preferences: ^2.2.2
+  get_it: ^7.6.4
+  image_picker: ^1.0.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/svgs/
