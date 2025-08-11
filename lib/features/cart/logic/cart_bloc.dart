@@ -98,40 +98,40 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  // Handle RemoveCartItem event - DELETE /api/cart/remove/{id}
+  // Handle RemoveCartItem event - DELETE /api/carts/{id}
   Future<void> _onRemoveCartItem(
     RemoveCartItem event,
     Emitter<CartState> emit,
   ) async {
     try {
       print(
-        '🛒 CartBloc: _onRemoveCartItem called - removing item with ID: ${event.id}',
+        '🛒 CartBloc: _onRemoveCartItem called - removing cart with ID: ${event.id}',
       );
 
-      final response = await _cartRepository.removeCartItem(event.id);
+      final response = await _cartRepository.deleteCartById(event.id);
 
       if (response.isSuccess) {
-        print('🛒 CartBloc: Item removed successfully: ${response.data}');
+        print('🛒 CartBloc: Cart deleted successfully: ${response.data}');
         // Show success message
         emit(
           CartSuccess(
-            message: response.data ?? 'Item removed from cart successfully.',
+            message: response.data ?? 'Cart removed successfully.',
           ),
         );
         // Reload cart to get updated data
         add(LoadCart());
       } else {
-        print('🛒 CartBloc: Failed to remove item: ${response.message}');
+        print('🛒 CartBloc: Failed to remove cart: ${response.message}');
         emit(
           CartError(
-            message: response.message ?? 'Failed to remove item from cart',
+            message: response.message ?? 'Failed to remove cart',
           ),
         );
       }
     } catch (e) {
       print('🛒 CartBloc: Exception in _onRemoveCartItem: $e');
       emit(
-        CartError(message: 'Failed to remove item from cart: ${e.toString()}'),
+        CartError(message: 'Failed to remove cart: ${e.toString()}'),
       );
     }
   }

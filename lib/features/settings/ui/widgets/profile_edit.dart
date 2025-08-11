@@ -81,9 +81,9 @@ class _MyProfileEditState extends State<MyProfileEdit> {
           if (state is AuthAuthenticated) {
             // Only update controllers if they are empty (first time loading)
             if (nameController.text.isEmpty) {
-              nameController.text = state.user.name ?? '';
+              nameController.text = state.user.name;
               phoneController.text = state.user.phone ?? '';
-              emailController.text = state.user.email ?? '';
+              emailController.text = state.user.email;
               addressController.text = state.user.address ?? '';
             }
           }

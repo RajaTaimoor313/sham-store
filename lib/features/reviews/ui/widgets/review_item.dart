@@ -10,13 +10,13 @@ class ReviewItem extends StatelessWidget {
   final bool showActions;
 
   const ReviewItem({
-    Key? key,
+    super.key,
     required this.review,
     this.onHelpfulPressed,
     this.onEditPressed,
     this.onDeletePressed,
     this.showActions = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

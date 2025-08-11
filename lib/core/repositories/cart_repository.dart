@@ -2,25 +2,27 @@ import '../api/api_service.dart';
 import '../api/api_constants.dart';
 import '../api/api_response.dart';
 import '../models/cart_model.dart';
-import '../helpers/storage_helper.dart';
 import 'auth_repository.dart';
 import '../di/service_locator.dart';
 
 class CartRepository {
   final ApiService _apiService = ApiService();
-  final StorageHelper _storageHelper = StorageHelper.instance;
 
   // Get cart items from API
   Future<ApiResponse<Cart>> getCart() async {
     try {
       print('🛒 CartRepository: getCart called - fetching from API');
-      
+
       // Get current user ID using service locator
       final currentUser = await sl<AuthRepository>().getStoredUser();
       final currentUserId = currentUser?.id;
-      print('🛒 CartRepository: Current user: ${currentUser?.name ?? 'Not logged in'}');
-      print('🛒 CartRepository: Current user ID for filtering: ${currentUserId ?? 'null (no user)'}');
-      
+      print(
+        '🛒 CartRepository: Current user: ${currentUser?.name ?? 'Not logged in'}',
+      );
+      print(
+        '🛒 CartRepository: Current user ID for filtering: ${currentUserId ?? 'null (no user)'}',
+      );
+
       // Get cart from API only
       final response = await _apiService.get(
         ApiConstants.cart,
@@ -37,22 +39,52 @@ class CartRepository {
         try {
           final cart = Cart.fromJson(response.data!);
           print('🛒 CartRepository: Cart parsed successfully');
-          print('🛒 CartRepository: Total cart items before filtering: ${cart.items.length}');
-          
-          // Filter cart by current user ID
+          print(
+            '🛒 CartRepository: Total cart items before filtering: ${cart.items.length}',
+          );
+
+          // Filter cart items by current user ID (customer_id)
           if (currentUserId != null) {
-            // Check if cart belongs to current user
-            if (cart.userId == currentUserId) {
-              print('🛒 CartRepository: ✅ Cart belongs to current user (ID: ${cart.userId}), keeping all ${cart.items.length} items');
-              print('🛒 CartRepository: Cart items: ${cart.items.map((item) => '${item.productName} (qty: ${item.quantity})').join(', ')}');
-              return ApiResponse.success(cart);
+            // Filter cart items to only include items that belong to the current user
+            final userCartItems = cart.items.where((item) => item.customerId == currentUserId).toList();
+            
+            print(
+              '🛒 CartRepository: Filtered cart items for user $currentUserId: ${userCartItems.length}/${cart.items.length} items',
+            );
+            
+            if (userCartItems.isNotEmpty) {
+              print(
+                '🛒 CartRepository: ✅ Found ${userCartItems.length} items for current user',
+              );
+              print(
+                '🛒 CartRepository: User cart items: ${userCartItems.map((item) => '${item.productName} (qty: ${item.quantity}, customer: ${item.customerId})').join(', ')}',
+              );
+              
+              // Create a new cart with filtered items and correct user ID
+              final filteredCart = Cart(
+                id: cart.id,
+                userId: currentUserId,
+                items: userCartItems,
+                subtotal: userCartItems.fold(0.0, (sum, item) => sum + item.totalPrice),
+                tax: cart.tax,
+                shipping: cart.shipping,
+                total: userCartItems.fold(0.0, (sum, item) => sum + item.totalPrice) + cart.tax + cart.shipping,
+                createdAt: cart.createdAt,
+                updatedAt: cart.updatedAt,
+              );
+              
+              return ApiResponse.success(filteredCart);
             } else {
-              print('🛒 CartRepository: ❌ Cart belongs to different user (Cart User ID: ${cart.userId}, Current User ID: $currentUserId), returning empty cart');
+              print(
+                '🛒 CartRepository: ❌ No cart items found for current user (ID: $currentUserId)',
+              );
               final emptyCart = Cart.empty(currentUserId);
               return ApiResponse.success(emptyCart);
             }
           } else {
-            print('🛒 CartRepository: ⚠️ No authenticated user found, returning empty cart');
+            print(
+              '🛒 CartRepository: ⚠️ No authenticated user found, returning empty cart',
+            );
             final emptyCart = Cart.empty(0);
             return ApiResponse.success(emptyCart);
           }
@@ -83,12 +115,16 @@ class CartRepository {
   Future<ApiResponse<Cart>> getCartItems() async {
     try {
       print('🛒 CartRepository: getCartItems called - GET /api/cart');
-      
+
       // Get current user ID using service locator
-       final currentUser = await sl<AuthRepository>().getStoredUser();
-       final currentUserId = currentUser?.id;
-      print('🛒 CartRepository: getCartItems Current user: ${currentUser?.name ?? 'Not logged in'}');
-      print('🛒 CartRepository: getCartItems Current user ID for filtering: ${currentUserId ?? 'null (no user)'}');
+      final currentUser = await sl<AuthRepository>().getStoredUser();
+      final currentUserId = currentUser?.id;
+      print(
+        '🛒 CartRepository: getCartItems Current user: ${currentUser?.name ?? 'Not logged in'}',
+      );
+      print(
+        '🛒 CartRepository: getCartItems Current user ID for filtering: ${currentUserId ?? 'null (no user)'}',
+      );
 
       final response = await _apiService.get(
         ApiConstants.cart,
@@ -110,26 +146,38 @@ class CartRepository {
           print(
             '🛒 CartRepository: getCartItems Total cart items before filtering: ${cart.items.length}',
           );
-          
+
           // Filter cart by current user ID
           List<CartItem> filteredItems = cart.items;
           if (currentUserId != null) {
             // Filter items where cart.userId matches current user ID
             if (cart.userId == currentUserId) {
               filteredItems = cart.items;
-              print('🛒 CartRepository: getCartItems ✅ Cart belongs to current user (ID: ${cart.userId}), keeping all ${filteredItems.length} items');
-              print('🛒 CartRepository: getCartItems Customer ID used for filtering: $currentUserId');
+              print(
+                '🛒 CartRepository: getCartItems ✅ Cart belongs to current user (ID: ${cart.userId}), keeping all ${filteredItems.length} items',
+              );
+              print(
+                '🛒 CartRepository: getCartItems Customer ID used for filtering: $currentUserId',
+              );
             } else {
               filteredItems = [];
-              print('🛒 CartRepository: getCartItems ❌ Cart belongs to different user (Cart User ID: ${cart.userId}, Current User ID: $currentUserId), filtering out all items');
-              print('🛒 CartRepository: getCartItems Customer ID used for filtering: $currentUserId');
+              print(
+                '🛒 CartRepository: getCartItems ❌ Cart belongs to different user (Cart User ID: ${cart.userId}, Current User ID: $currentUserId), filtering out all items',
+              );
+              print(
+                '🛒 CartRepository: getCartItems Customer ID used for filtering: $currentUserId',
+              );
             }
           } else {
-            print('🛒 CartRepository: getCartItems ⚠️ No authenticated user found, returning empty cart');
-            print('🛒 CartRepository: getCartItems Customer ID used for filtering: null (no user authenticated)');
+            print(
+              '🛒 CartRepository: getCartItems ⚠️ No authenticated user found, returning empty cart',
+            );
+            print(
+              '🛒 CartRepository: getCartItems Customer ID used for filtering: null (no user authenticated)',
+            );
             filteredItems = [];
           }
-          
+
           // Create filtered cart
           final filteredCart = Cart(
             id: cart.id,
@@ -142,7 +190,7 @@ class CartRepository {
             createdAt: cart.createdAt,
             updatedAt: cart.updatedAt,
           );
-          
+
           print(
             '🛒 CartRepository: getCartItems Filtered cart items count: ${filteredCart.items.length}',
           );
@@ -445,13 +493,17 @@ class CartRepository {
   // Clear cart
   Future<ApiResponse<Cart>> clearCart() async {
     try {
-      print('🛒 CartRepository: clearCart called - DELETE ${ApiConstants.clearCart}');
-      
+      print(
+        '🛒 CartRepository: clearCart called - DELETE ${ApiConstants.clearCart}',
+      );
+
       // Get current user ID for creating empty cart
       final currentUser = await sl<AuthRepository>().getStoredUser();
       final currentUserId = currentUser?.id ?? 0;
-      print('🛒 CartRepository: clearCart Customer ID for empty cart: $currentUserId');
-      
+      print(
+        '🛒 CartRepository: clearCart Customer ID for empty cart: $currentUserId',
+      );
+
       final response = await _apiService.delete(
         ApiConstants.clearCart,
         requireAuth: true,
@@ -460,10 +512,14 @@ class CartRepository {
       if (response.isSuccess) {
         print('🛒 CartRepository: clearCart API response successful');
         final emptyCart = Cart.empty(currentUserId);
-        print('🛒 CartRepository: clearCart Created empty cart for user ID: $currentUserId');
+        print(
+          '🛒 CartRepository: clearCart Created empty cart for user ID: $currentUserId',
+        );
         return ApiResponse.success(emptyCart);
       } else {
-        print('🛒 CartRepository: clearCart API response failed: ${response.error}');
+        print(
+          '🛒 CartRepository: clearCart API response failed: ${response.error}',
+        );
         return ApiResponse.error(response.error ?? 'Failed to clear cart');
       }
     } catch (e) {
@@ -479,6 +535,284 @@ class CartRepository {
       return await getCart();
     } catch (e) {
       return ApiResponse.error('Failed to sync cart: ${e.toString()}');
+    }
+  }
+
+  // NEW CART API METHODS based on Postman collection
+
+  // POST /api/carts - Create new cart
+  Future<ApiResponse<Cart>> createCart({
+    required String name,
+    required String email,
+    required int sellerId,
+    required int productId,
+    required String quantity,
+    required String unit,
+    required String unitPrice,
+  }) async {
+    try {
+      print(
+        '🛒 CartRepository: createCart called - POST ${ApiConstants.carts}',
+      );
+      print('🛒 CartRepository: Creating cart for: $name ($email)');
+      print(
+        '🛒 CartRepository: Product: $productId, Quantity: $quantity, Unit Price: $unitPrice',
+      );
+
+      final requestBody = {
+        'name': name,
+        'email': email,
+        'seller_id': sellerId,
+        'product_id': productId,
+        'quantity': quantity,
+        'unit': unit,
+        'unit_price': unitPrice,
+      };
+
+      print('🛒 CartRepository: Request body: $requestBody');
+
+      final response = await _apiService.post(
+        ApiConstants.carts,
+        body: requestBody,
+        requireAuth: true,
+      );
+
+      print('🛒 CartRepository: Create cart response received');
+      print('🛒 CartRepository: Success: ${response.isSuccess}');
+      print('🛒 CartRepository: Data: ${response.data}');
+
+      if (response.isSuccess && response.data != null) {
+        print('🛒 CartRepository: ✅ Cart created successfully');
+        final cart = Cart.fromJson(response.data!);
+        return ApiResponse.success(cart);
+      } else {
+        print('🛒 CartRepository: ❌ Failed to create cart: ${response.error}');
+        return ApiResponse.error(response.error ?? 'Failed to create cart');
+      }
+    } catch (e) {
+      print('🛒 CartRepository: Exception in createCart: $e');
+      return ApiResponse.error('Failed to create cart: ${e.toString()}');
+    }
+  }
+
+  // GET /api/carts - Get user's carts
+  Future<ApiResponse<List<Cart>>> getUserCarts() async {
+    try {
+      print(
+        '🛒 CartRepository: getUserCarts called - GET ${ApiConstants.carts}',
+      );
+
+      final response = await _apiService.get(
+        ApiConstants.carts,
+        requireAuth: true,
+      );
+
+      print('🛒 CartRepository: Get user carts response received');
+      print('🛒 CartRepository: Success: ${response.isSuccess}');
+      print('🛒 CartRepository: Data: ${response.data}');
+
+      if (response.isSuccess && response.data != null) {
+        print('🛒 CartRepository: ✅ User carts fetched successfully');
+        final cartsList = (response.data as List<dynamic>)
+            .map((cartData) => Cart.fromJson(cartData))
+            .toList();
+        print('🛒 CartRepository: Found ${cartsList.length} carts');
+        return ApiResponse.success(cartsList);
+      } else {
+        print(
+          '🛒 CartRepository: ❌ Failed to fetch user carts: ${response.error}',
+        );
+        return ApiResponse.error(
+          response.error ?? 'Failed to fetch user carts',
+        );
+      }
+    } catch (e) {
+      print('🛒 CartRepository: Exception in getUserCarts: $e');
+      return ApiResponse.error('Failed to fetch user carts: ${e.toString()}');
+    }
+  }
+
+  // GET /api/carts/all - Get all carts (admin/seller view)
+  Future<ApiResponse<List<Cart>>> getAllCarts() async {
+    try {
+      print(
+        '🛒 CartRepository: getAllCarts called - GET ${ApiConstants.allCarts}',
+      );
+
+      final response = await _apiService.get(
+        ApiConstants.allCarts,
+        requireAuth: true,
+      );
+
+      print('🛒 CartRepository: Get all carts response received');
+      print('🛒 CartRepository: Success: ${response.isSuccess}');
+      print('🛒 CartRepository: Data: ${response.data}');
+
+      if (response.isSuccess && response.data != null) {
+        print('🛒 CartRepository: ✅ All carts fetched successfully');
+        final cartsList = (response.data as List<dynamic>)
+            .map((cartData) => Cart.fromJson(cartData))
+            .toList();
+        print('🛒 CartRepository: Found ${cartsList.length} total carts');
+        return ApiResponse.success(cartsList);
+      } else {
+        print(
+          '🛒 CartRepository: ❌ Failed to fetch all carts: ${response.error}',
+        );
+        return ApiResponse.error(response.error ?? 'Failed to fetch all carts');
+      }
+    } catch (e) {
+      print('🛒 CartRepository: Exception in getAllCarts: $e');
+      return ApiResponse.error('Failed to fetch all carts: ${e.toString()}');
+    }
+  }
+
+  // GET /api/carts/{id} - Get cart by ID
+  Future<ApiResponse<Cart>> getCartById(int cartId) async {
+    try {
+      print(
+        '🛒 CartRepository: getCartById called - GET ${ApiConstants.cartById}/$cartId',
+      );
+
+      final response = await _apiService.get(
+        '${ApiConstants.cartById}/$cartId',
+        requireAuth: true,
+      );
+
+      print('🛒 CartRepository: Get cart by ID response received');
+      print('🛒 CartRepository: Success: ${response.isSuccess}');
+      print('🛒 CartRepository: Data: ${response.data}');
+
+      if (response.isSuccess && response.data != null) {
+        print('🛒 CartRepository: ✅ Cart fetched successfully by ID: $cartId');
+        final cart = Cart.fromJson(response.data!);
+        return ApiResponse.success(cart);
+      } else {
+        print(
+          '🛒 CartRepository: ❌ Failed to fetch cart by ID: ${response.error}',
+        );
+        return ApiResponse.error(response.error ?? 'Failed to fetch cart');
+      }
+    } catch (e) {
+      print('🛒 CartRepository: Exception in getCartById: $e');
+      return ApiResponse.error('Failed to fetch cart: ${e.toString()}');
+    }
+  }
+
+  // PUT /api/carts/{id} - Update cart by ID
+  Future<ApiResponse<Cart>> updateCartById(
+    int cartId, {
+    required int sellerId,
+    required int productId,
+    required String quantity,
+    required String unit,
+    required String unitPrice,
+  }) async {
+    try {
+      print(
+        '🛒 CartRepository: updateCartById called - PUT ${ApiConstants.updateCart}/$cartId',
+      );
+      print('🛒 CartRepository: Updating cart ID: $cartId');
+      print(
+        '🛒 CartRepository: Product: $productId, Quantity: $quantity, Unit Price: $unitPrice',
+      );
+
+      final requestBody = {
+        'seller_id': sellerId,
+        'product_id': productId,
+        'quantity': quantity,
+        'unit': unit,
+        'unit_price': unitPrice,
+      };
+
+      print('🛒 CartRepository: Request body: $requestBody');
+
+      final response = await _apiService.put(
+        '${ApiConstants.updateCart}/$cartId',
+        body: requestBody,
+        requireAuth: true,
+      );
+
+      print('🛒 CartRepository: Update cart response received');
+      print('🛒 CartRepository: Success: ${response.isSuccess}');
+      print('🛒 CartRepository: Data: ${response.data}');
+
+      if (response.isSuccess && response.data != null) {
+        print('🛒 CartRepository: ✅ Cart updated successfully: $cartId');
+        final cart = Cart.fromJson(response.data!);
+        return ApiResponse.success(cart);
+      } else {
+        print('🛒 CartRepository: ❌ Failed to update cart: ${response.error}');
+        return ApiResponse.error(response.error ?? 'Failed to update cart');
+      }
+    } catch (e) {
+      print('🛒 CartRepository: Exception in updateCartById: $e');
+      return ApiResponse.error('Failed to update cart: ${e.toString()}');
+    }
+  }
+
+  // DELETE /api/carts/{id} - Delete cart by ID
+  Future<ApiResponse<String>> deleteCartById(int cartId) async {
+    try {
+      print(
+        '🛒 CartRepository: deleteCartById called - DELETE ${ApiConstants.deleteCart}/$cartId',
+      );
+
+      final response = await _apiService.delete(
+        '${ApiConstants.deleteCart}/$cartId',
+        requireAuth: true,
+      );
+
+      print('🛒 CartRepository: Delete cart response received');
+      print('🛒 CartRepository: Success: ${response.isSuccess}');
+      print('🛒 CartRepository: Message: ${response.message}');
+
+      if (response.isSuccess) {
+        print('🛒 CartRepository: ✅ Cart deleted successfully: $cartId');
+        return ApiResponse.success('Cart deleted successfully');
+      } else {
+        print('🛒 CartRepository: ❌ Failed to delete cart: ${response.error}');
+        return ApiResponse.error(response.error ?? 'Failed to delete cart');
+      }
+    } catch (e) {
+      print('🛒 CartRepository: Exception in deleteCartById: $e');
+      return ApiResponse.error('Failed to delete cart: ${e.toString()}');
+    }
+  }
+
+  // GET /api/carts/search/{query} - Search carts
+  Future<ApiResponse<List<Cart>>> searchCarts(String query) async {
+    try {
+      print(
+        '🛒 CartRepository: searchCarts called - GET ${ApiConstants.searchCarts}/$query',
+      );
+      print('🛒 CartRepository: Search query: $query');
+
+      final response = await _apiService.get(
+        '${ApiConstants.searchCarts}/$query',
+        requireAuth: true,
+      );
+
+      print('🛒 CartRepository: Search carts response received');
+      print('🛒 CartRepository: Success: ${response.isSuccess}');
+      print('🛒 CartRepository: Data: ${response.data}');
+
+      if (response.isSuccess && response.data != null) {
+        print('🛒 CartRepository: ✅ Cart search completed successfully');
+        final cartsList = (response.data as List<dynamic>)
+            .map((cartData) => Cart.fromJson(cartData))
+            .toList();
+        print(
+          '🛒 CartRepository: Found ${cartsList.length} carts matching "$query"',
+        );
+        return ApiResponse.success(cartsList);
+      } else {
+        print('🛒 CartRepository: ❌ Failed to search carts: ${response.error}');
+        return ApiResponse.error(response.error ?? 'Failed to search carts');
+      }
+    } catch (e) {
+      print('🛒 CartRepository: Exception in searchCarts: $e');
+      return ApiResponse.error('Failed to search carts: ${e.toString()}');
     }
   }
 

@@ -127,7 +127,7 @@ class AppLocalizations {
       'save_up_to_40': 'Save up to 40%',
       'trendy_stylish': 'Trendy & Stylish',
       'fun_for_all_ages': 'Fun for all ages',
-      'user_name': 'Ali Shahwaiz',
+      'user_name': 'User',
 
       // Cart Screen
       'add_more': 'Add More',
@@ -267,7 +267,7 @@ class AppLocalizations {
       'save_up_to_40': 'وفر حتى 40%',
       'trendy_stylish': 'عصري وأنيق',
       'fun_for_all_ages': 'ممتع لجميع الأعمار',
-      'user_name': 'علي شهويز',
+      'user_name': 'مستخدم',
 
       // Cart Screen
       'add_more': 'إضافة المزيد',

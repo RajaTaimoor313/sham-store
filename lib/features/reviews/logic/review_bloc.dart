@@ -320,7 +320,7 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
     Emitter<ReviewState> emit,
   ) async {
     final currentReviews = _getCurrentReviews();
-    final currentStatistics = _getCurrentStatistics();
+    _getCurrentStatistics();
     
     try {
       print('👍 ReviewBloc: Marking review ${event.reviewId} as ${event.isHelpful ? "helpful" : "not helpful"}');

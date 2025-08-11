@@ -99,9 +99,21 @@ class Cart {
 
     print('🛒 Cart.fromJson: Final parsed items count: ${parsedItems.length}');
 
+    // Extract user ID from cart items if not present at cart level
+    int extractedUserId = int.tryParse(json['user_id']?.toString() ?? '0') ?? 0;
+    
+    // Since the API returns all cart items from all users, we need to handle this differently
+    // The cart parsing should not filter by user - that should be done in the repository
+    // For now, set userId to 0 to indicate this is a mixed cart that needs filtering
+    if (extractedUserId == 0) {
+      print('🛒 Cart.fromJson: No user_id at cart level, setting to 0 for repository filtering');
+    }
+    
+    print('🛒 Cart.fromJson: Final user ID: $extractedUserId');
+
     return Cart(
       id: int.tryParse(json['id']?.toString() ?? '0') ?? 0,
-      userId: int.tryParse(json['user_id']?.toString() ?? '0') ?? 0,
+      userId: extractedUserId,
       items: parsedItems,
       subtotal: double.tryParse(json['subtotal']?.toString() ?? '0') ?? 0.0,
       tax: double.tryParse(json['tax']?.toString() ?? '0') ?? 0.0,
@@ -175,6 +187,7 @@ class Cart {
 class CartItem {
   final int id;
   final int cartId;
+  final int customerId;
   final int productId;
   final String productName;
   final String? productImage;
@@ -189,6 +202,7 @@ class CartItem {
   CartItem({
     required this.id,
     required this.cartId,
+    required this.customerId,
     required this.productId,
     required this.productName,
     this.productImage,
@@ -209,6 +223,7 @@ class CartItem {
       // Safe parsing with comprehensive error handling and defaults
       final id = int.tryParse(json['id']?.toString() ?? '0') ?? 0;
       final cartId = int.tryParse(json['cart_id']?.toString() ?? '0') ?? 0;
+      final customerId = int.tryParse(json['customer_id']?.toString() ?? '0') ?? 0;
       final productId =
           int.tryParse(json['product_id']?.toString() ?? '0') ?? 0;
 
@@ -267,6 +282,7 @@ class CartItem {
       final cartItem = CartItem(
         id: id,
         cartId: cartId,
+        customerId: customerId,
         productId: productId,
         productName: productName,
         productImage: productImage,
@@ -281,6 +297,7 @@ class CartItem {
 
       print('🛍️ CartItem.fromJson: Successfully parsed item:');
       print('🛍️ CartItem.fromJson: - ID: $id');
+      print('🛍️ CartItem.fromJson: - Customer ID: $customerId');
       print('🛍️ CartItem.fromJson: - Product ID: $productId');
       print('🛍️ CartItem.fromJson: - Product Name: $productName');
       print('🛍️ CartItem.fromJson: - Unit Price: $unitPrice');
@@ -307,6 +324,7 @@ class CartItem {
         productAttributes: null,
         createdAt: null,
         updatedAt: null,
+        customerId: int.tryParse(json['customer_id']?.toString() ?? '0') ?? 0,
       );
     }
   }
@@ -315,6 +333,7 @@ class CartItem {
     return {
       'id': id,
       'cart_id': cartId,
+      'customer_id': customerId,
       'product_id': productId,
       'product_name': productName,
       'product_image': productImage,
@@ -336,6 +355,7 @@ class CartItem {
   CartItem copyWith({
     int? id,
     int? cartId,
+    int? customerId,
     int? productId,
     String? productName,
     String? productImage,
@@ -350,6 +370,7 @@ class CartItem {
     return CartItem(
       id: id ?? this.id,
       cartId: cartId ?? this.cartId,
+      customerId: customerId ?? this.customerId,
       productId: productId ?? this.productId,
       productName: productName ?? this.productName,
       productImage: productImage ?? this.productImage,
@@ -372,12 +393,14 @@ class CartItem {
     String? productImage,
     required double unitPrice,
     int quantity = 1,
+    int customerId = 0,
     String? productSku,
     Map<String, dynamic>? productAttributes,
   }) {
     return CartItem(
       id: 0, // Will be set by backend
       cartId: 0, // Will be set by backend
+      customerId: customerId,
       productId: productId,
       productName: productName,
       productImage: productImage,

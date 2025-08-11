@@ -24,11 +24,11 @@ class CategoryRepository {
         queryParams['include_subcategories'] = 'true';
       }
 
-      print('🌐 CategoryRepository: Making API call to ${ApiConstants.productCategories}');
+      print('🌐 CategoryRepository: Making API call to ${ApiConstants.productCategory}');
       print('📝 CategoryRepository: Query params: $queryParams');
       
       final response = await _apiService.get(
-        ApiConstants.productCategories,
+        ApiConstants.productCategory,
         queryParams: queryParams,
       );
 
@@ -70,7 +70,7 @@ class CategoryRepository {
     
     try {
       final response = await _apiService.get(
-        '${ApiConstants.productCategories}/$id',
+        '${ApiConstants.productCategory}/$id',
       );
       
       print('📡 CategoryRepository: fetchCategoryById response: ${response.isSuccess}');
@@ -89,7 +89,7 @@ class CategoryRepository {
   Future<List<Category>> searchCategories(String searchTerm) async {
     try {
       final response = await _apiService.get(
-        '${ApiConstants.productCategories}/search',
+        '${ApiConstants.productCategory}/search',
         queryParams: {'search': searchTerm},
       );
 
@@ -122,7 +122,7 @@ class CategoryRepository {
   Future<List<Category>> fetchCategoriesWithProductCount() async {
     try {
       final response = await _apiService.get(
-        ApiConstants.productCategories,
+        ApiConstants.productCategory,
         queryParams: {'include_product_count': 'true'},
       );
 

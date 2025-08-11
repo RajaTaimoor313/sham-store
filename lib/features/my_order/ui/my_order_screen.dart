@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shamstore/core/themina/colors.dart';
-import 'package:flutter_shamstore/features/my_order/ui/order_item.dart';
-import 'package:flutter_shamstore/features/my_order/ui/order_item_widget.dart';
 import 'package:flutter_shamstore/core/localization/localization_helper.dart';
 import 'package:flutter_shamstore/core/localization/language_bloc.dart';
 import 'package:flutter_shamstore/features/orders/logic/order_bloc.dart';
@@ -12,7 +10,7 @@ import 'package:flutter_shamstore/core/models/order_model.dart';
 import 'package:flutter_shamstore/core/routing/routes.dart';
 
 class MyOrderScreen extends StatelessWidget {
-  MyOrderScreen({super.key});
+  const MyOrderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +140,7 @@ class MyOrderScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Order #${order.orderNumber ?? order.id}',
+                  'Order #${order.orderNumber}',
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
@@ -151,11 +149,11 @@ class MyOrderScreen extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                   decoration: BoxDecoration(
-                    color: _getStatusColor(order.status ?? ''),
+                    color: _getStatusColor(order.status),
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: Text(
-                    order.status ?? 'Unknown',
+                    order.status,
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: Colors.white,

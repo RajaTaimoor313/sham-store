@@ -186,13 +186,13 @@ class AuthRepository {
     }
   }
 
-  // Forgot password
-  Future<ApiResponse<void>> forgotPassword(
+  // Send reset password pin
+  Future<ApiResponse<void>> sendResetPasswordPin(
     ForgotPasswordRequest request,
   ) async {
     try {
       final response = await _apiService.post(
-        ApiConstants.forgotPassword,
+        ApiConstants.sendResetPasswordPin,
         body: request.toJson(),
         requireAuth: false,
       );
@@ -201,10 +201,18 @@ class AuthRepository {
         return ApiResponse.success(null);
       }
 
-      return ApiResponse.error(response.message ?? 'Password change failed');
+      return ApiResponse.error(response.message ?? 'Failed to send reset pin');
     } catch (e) {
-      return ApiResponse.error('Forgot password failed: ${e.toString()}');
+      return ApiResponse.error('Failed to send reset pin: ${e.toString()}');
     }
+  }
+
+  // Forgot password (legacy method - kept for compatibility)
+  Future<ApiResponse<void>> forgotPassword(
+    ForgotPasswordRequest request,
+  ) async {
+    // Use the new send reset password pin method
+    return sendResetPasswordPin(request);
   }
 
   // Reset password

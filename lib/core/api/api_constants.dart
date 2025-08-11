@@ -5,7 +5,8 @@ class ApiConstants {
   static const String login = '/api/login';
   static const String logout = '/api/logout';
   static const String forgotPassword = '/api/forgot-password';
-  static const String resetPassword = '/api/reset-password';
+  static const String sendResetPasswordPin = '/api/send_reset_password_pin';
+  static const String resetPassword = '/api/reset_password';
   static const String verifyEmail = '/api/verify-email';
   static const String verifyEmailOtp = '/api/verify_email';
   static const String resendOtp = '/api/resend_otp';
@@ -14,37 +15,39 @@ class ApiConstants {
   static const String changePassword = '/api/change_password';
 
   // Product endpoints
-  static const String products = '/api/products';
+  static const String product = '/api/product';
   static const String allProducts = '/api/all_products';
-  static const String searchProducts = '/search_product';
+  static const String searchProduct = '/api/search_product';
   static const String productWithShipping = '/product_with_shipping';
+  static const String productsByCategory = '/api/products/category';
+  static const String categoryProducts = '/api/category/{categoryId}/products';
 
   // Product Category endpoints
-  static const String productCategories = '/productcategor';
-  static const String allProductCategories = '/all_productcategors';
-  static const String searchProductCategories = '/search_productcategor';
+  static const String productCategory = '/api/productcategor';
+  static const String allProductCategories = '/api/all_productcategors';
+  static const String searchProductCategory = '/api/search_productcategor';
   static const String publicProductCategories = '/public/productcat';
   static const String productCategoryWithSub = '/product_catagory';
 
   // Product Gallery endpoints
-  static const String productGallery = '/productgaller';
-  static const String allProductGalleries = '/all_productgallers';
-  static const String searchProductGalleries = '/search_productgaller';
+  static const String productGallery = '/api/productgaller';
+  static const String allProductGalleries = '/api/all_productgallers';
+  static const String searchProductGallery = '/api/search_productgaller';
 
   // Product Attributes endpoints
-  static const String productAttributes = '/productattribute';
-  static const String allProductAttributes = '/all_productattributes';
-  static const String searchProductAttributes = '/search_productattribute';
+  static const String productAttribute = '/api/productattribute';
+  static const String allProductAttributes = '/api/all_productattributes';
+  static const String searchProductAttribute = '/api/search_productattribute';
 
   // Product Pricing Tier endpoints
-  static const String productPricingTiers = '/productpricingtier';
-  static const String allProductPricingTiers = '/all_productpricingtiers';
-  static const String searchProductPricingTiers = '/search_productpricingtier';
+  static const String productPricingTier = '/api/productpricingtier';
+  static const String allProductPricingTiers = '/api/all_productpricingtiers';
+  static const String searchProductPricingTier = '/api/search_productpricingtier';
 
   // Product Shipping endpoints
-  static const String productShipping = '/productshipping';
-  static const String allProductShippings = '/all_productshippings';
-  static const String searchProductShippings = '/search_productshipping';
+  static const String productShipping = '/api/productshipping';
+  static const String allProductShippings = '/api/all_productshippings';
+  static const String searchProductShipping = '/api/search_productshipping';
 
   // Order endpoints
   static const String orders = '/order';
@@ -133,11 +136,12 @@ class ApiConstants {
   static const String searchGalleries = '/search_gallery';
 
   // Notification endpoints
-  static const String notifications = '/notifications';
-  static const String notificationSettings = '/notificationsetting';
-  static const String allNotificationSettings = '/all_notificationsettings';
+  static const String notifications = '/api/notifications';
+  static const String notificationSettings = '/api/notificationsetting';
+  static const String allNotificationSettings = '/api/all_notificationsettings';
   static const String searchNotificationSettings =
-      '/search_notificationsetting';
+      '/api/search_notificationsetting';
+  static const String markNotificationsAsRead = '/api/notifications/mark-as-read';
 
   // Business Settings endpoints
   static const String businessSettings = '/businesssetting';
@@ -177,7 +181,15 @@ class ApiConstants {
   // Broadcasting
   static const String broadcastingAuth = '/broadcasting/auth';
 
-  // Cart
+  // Cart endpoints
+  static const String carts = '/api/carts';  // POST, GET
+  static const String allCarts = '/api/carts/all';  // GET
+  static const String cartById = '/api/carts';  // GET /api/carts/{id}
+  static const String updateCart = '/api/carts';  // PUT /api/carts/{id}
+  static const String deleteCart = '/api/carts';  // DELETE /api/carts/{id}
+  static const String searchCarts = '/api/carts/search';  // GET /api/carts/search/{query}
+  
+  // Legacy cart endpoints (keeping for backward compatibility)
   static const String cart = '/api/carts/all';
   static const String addToCart = '/api/carts';
   static const String updateCartItem = '/api/cart/update';

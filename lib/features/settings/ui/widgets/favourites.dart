@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -79,6 +78,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
       unitPrice: item.productPrice,
       quantity: 1,
       totalPrice: item.productPrice,
+      customerId: 0, // Will be set by the cart repository
     );
     context.read<CartBloc>().add(AddItem(cartItem));
     ScaffoldMessenger.of(
@@ -120,7 +120,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                     print('🔍 FavouritesScreen: Error state - ${state.message}');
                     return SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
-                      child: Container(
+                      child: SizedBox(
                         height: MediaQuery.of(context).size.height * 0.7,
                         child: Center(
                           child: Column(
@@ -166,7 +166,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                     if (wishlistItems.isEmpty) {
                       return SingleChildScrollView(
                         physics: const AlwaysScrollableScrollPhysics(),
-                        child: Container(
+                        child: SizedBox(
                           height: MediaQuery.of(context).size.height * 0.7,
                           child: Center(
                             child: Column(

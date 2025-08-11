@@ -13,10 +13,10 @@ class ProductReviewsScreen extends StatefulWidget {
   final String productName;
 
   const ProductReviewsScreen({
-    Key? key,
+    super.key,
     required this.productId,
     required this.productName,
-  }) : super(key: key);
+  });
 
   @override
   State<ProductReviewsScreen> createState() => _ProductReviewsScreenState();
@@ -304,7 +304,7 @@ class _ProductReviewsScreenState extends State<ProductReviewsScreen> {
                           child: Column(
                             children: [
                               Text(
-                                (state as ReviewError).message,
+                                (state).message,
                                 style: TextStyle(
                                   color: Colors.red.shade700,
                                 ),

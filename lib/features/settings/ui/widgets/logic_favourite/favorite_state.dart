@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_shamstore/features/settings/ui/widgets/favourites.dart';
 
 class FavoriteState extends Equatable {
   final List<FavouritesItem> favorites;

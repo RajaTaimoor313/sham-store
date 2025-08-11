@@ -19,4 +19,5 @@ class Routes {
   static const String notificationsScreen = '/notificationsScreen';
   static const String notificationSettingsScreen =
       '/notificationSettingsScreen';
+  static const String enterResetCode = '/enterResetCode';
 }

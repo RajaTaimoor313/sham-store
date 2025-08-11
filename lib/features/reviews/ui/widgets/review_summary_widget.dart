@@ -11,14 +11,14 @@ class ReviewSummaryWidget extends StatelessWidget {
   final VoidCallback? onViewAllPressed;
 
   const ReviewSummaryWidget({
-    Key? key,
+    super.key,
     required this.productId,
     required this.productName,
     this.statistics,
     this.recentReviews = const [],
     this.isLoading = false,
     this.onViewAllPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

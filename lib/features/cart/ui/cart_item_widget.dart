@@ -31,7 +31,10 @@ class CartItemWidget extends StatelessWidget {
             onPressed: () {
               if (item.quantity > 1) {
                 context.read<CartBloc>().add(
-                  UpdateQuantity(item, item.quantity - 1),
+                  UpdateCartItemQuantity(
+                    cartItemId: item.id.toString(),
+                    quantity: item.quantity - 1,
+                  ),
                 );
               }
             },
@@ -40,7 +43,10 @@ class CartItemWidget extends StatelessWidget {
             icon: const Icon(Icons.add),
             onPressed: () {
               context.read<CartBloc>().add(
-                UpdateQuantity(item, item.quantity + 1),
+                UpdateCartItemQuantity(
+                  cartItemId: item.id.toString(),
+                  quantity: item.quantity + 1,
+                ),
               );
             },
           ),

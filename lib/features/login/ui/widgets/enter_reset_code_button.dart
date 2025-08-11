@@ -7,18 +7,23 @@ import 'package:flutter_shamstore/core/themina/colors.dart';
 import 'package:flutter_shamstore/core/themina/font_weight_help.dart';
 import 'package:flutter_shamstore/core/widgets/text_button.dart';
 import 'package:flutter_shamstore/features/auth/logic/auth_bloc.dart';
-import 'package:flutter_shamstore/features/login/ui/widgets/forget_form.dart';
 
-class ForgetButton extends StatelessWidget {
-  final GlobalKey<ForgetFormState> formKey;
-  final String email;
+class EnterResetCodeButton extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
   final bool isFormValid;
+  final String email;
+  final String resetCode;
+  final String password;
+  final String passwordConfirmation;
 
-  const ForgetButton({
+  const EnterResetCodeButton({
     super.key,
     required this.formKey,
-    required this.email,
     required this.isFormValid,
+    required this.email,
+    required this.resetCode,
+    required this.password,
+    required this.passwordConfirmation,
   });
 
   @override
@@ -33,11 +38,11 @@ class ForgetButton extends StatelessWidget {
               backgroundColor: Colors.green,
             ),
           );
-          // Navigate to enter reset code page
-          Navigator.pushReplacementNamed(
+          // Navigate to login screen
+          Navigator.pushNamedAndRemoveUntil(
             context,
-            Routes.enterResetCode,
-            arguments: {'email': email},
+            Routes.loginscreen,
+            (route) => false,
           );
         } else if (state is AuthError) {
           // Show error message
@@ -53,19 +58,28 @@ class ForgetButton extends StatelessWidget {
               onPressed: state is AuthLoading
                   ? null
                   : () {
-                      if (isFormValid && email.isNotEmpty) {
-                        // Trigger forgot password event
+                      if (isFormValid &&
+                          email.isNotEmpty &&
+                          resetCode.isNotEmpty &&
+                          password.isNotEmpty &&
+                          passwordConfirmation.isNotEmpty) {
+                        // Trigger reset password event with pin
                         context.read<AuthBloc>().add(
-                          AuthForgotPasswordRequested(email: email),
+                          AuthResetPasswordRequested(
+                            email: email,
+                            pin: resetCode,
+                            password: password,
+                            passwordConfirmation: passwordConfirmation,
+                          ),
                         );
                       } else {
                         // Trigger form validation to show error messages
-                        formKey.currentState?.validateForm();
+                        formKey.currentState?.validate();
                       }
                     },
               buttonText: state is AuthLoading
-                  ? 'Sending...'
-                  : 'Send Reset Code',
+                  ? 'Resetting...'
+                  : 'Reset Password',
               textStyle: TextStyle(
                 fontWeight: FontWeightHelper.medium,
                 color: ColorsManager.mainWhite,

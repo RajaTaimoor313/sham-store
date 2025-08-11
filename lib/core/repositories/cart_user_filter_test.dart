@@ -6,7 +6,7 @@ import '../blocs/cart/cart_state.dart';
 import '../helpers/storage_helper.dart';
 
 class CartUserFilterTest extends StatefulWidget {
-  const CartUserFilterTest({Key? key}) : super(key: key);
+  const CartUserFilterTest({super.key});
 
   @override
   State<CartUserFilterTest> createState() => _CartUserFilterTestState();

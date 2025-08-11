@@ -51,7 +51,12 @@ class AuthUpdateProfileRequested extends AuthEvent {
   final String? phone;
   final String? address;
 
-  const AuthUpdateProfileRequested({this.name, this.email, this.phone, this.address});
+  const AuthUpdateProfileRequested({
+    this.name,
+    this.email,
+    this.phone,
+    this.address,
+  });
 
   @override
   List<Object?> get props => [name, email, phone, address];
@@ -87,19 +92,19 @@ class AuthForgotPasswordRequested extends AuthEvent {
 
 class AuthResetPasswordRequested extends AuthEvent {
   final String email;
-  final String token;
+  final String pin;
   final String password;
   final String passwordConfirmation;
 
   const AuthResetPasswordRequested({
     required this.email,
-    required this.token,
+    required this.pin,
     required this.password,
     required this.passwordConfirmation,
   });
 
   @override
-  List<Object> get props => [email, token, password, passwordConfirmation];
+  List<Object> get props => [email, pin, password, passwordConfirmation];
 }
 
 class AuthVerifyOtpRequested extends AuthEvent {
@@ -364,9 +369,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       if (response.isSuccess) {
-        emit(AuthSuccess(message: 'Password reset email sent successfully'));
+        emit(AuthSuccess(message: 'Reset Password Pin has been sent'));
       } else {
-        emit(AuthError(message: response.message ?? 'Forgot password failed'));
+        emit(
+          AuthError(message: response.message ?? 'Failed to send reset pin'),
+        );
       }
     } catch (e) {
       emit(AuthError(message: 'Forgot password failed: ${e.toString()}'));
@@ -382,7 +389,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final resetPasswordRequest = ResetPasswordRequest(
         email: event.email,
-        token: event.token,
+        pin: event.pin,
         password: event.password,
         passwordConfirmation: event.passwordConfirmation,
       );

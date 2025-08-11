@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_shamstore/core/helpers/spacing.dart';
-import 'package:flutter_shamstore/features/home/ui/show_product.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_shamstore/core/localization/localization_helper.dart';
 import 'package:flutter_shamstore/core/localization/language_bloc.dart';
 import 'package:flutter_shamstore/features/categories/logic/product_cubit.dart';
 import 'package:flutter_shamstore/features/categories/data/product_repository.dart';
-import 'package:flutter_shamstore/features/categories/data/models/product_model.dart';
 import 'package:flutter_shamstore/core/di/service_locator.dart';
 import 'package:flutter_shamstore/features/home/ui/product_details_page.dart';
 
@@ -38,106 +34,6 @@ class ProductsPageContent extends StatelessWidget {
   const ProductsPageContent({super.key, required this.categoryName});
 
   // منتجات وهمية لكل فئة
-  List<ProductItem> _getProductsForCategory() {
-    switch (categoryName.toLowerCase()) {
-      case 'computers':
-        return [
-          ProductItem(
-            imageUrl:
-                'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500',
-            title: 'MacBook Pro',
-            price: '\$1999',
-            cartIcon: Icons.shopping_cart,
-            onCartPressed: () {},
-            onFavoritePressed: () {},
-          ),
-          ProductItem(
-            imageUrl:
-                'https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=500',
-            title: 'Gaming PC',
-            price: '\$1500',
-            cartIcon: Icons.shopping_cart,
-            onCartPressed: () {},
-            onFavoritePressed: () {},
-          ),
-        ];
-      case 'home':
-        return [
-          ProductItem(
-            imageUrl:
-                'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500',
-            title: 'Modern Lamp',
-            price: '\$120',
-            cartIcon: Icons.shopping_cart,
-            onCartPressed: () {},
-            onFavoritePressed: () {},
-          ),
-          ProductItem(
-            imageUrl:
-                'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500',
-            title: 'Home Decor',
-            price: '\$80',
-            cartIcon: Icons.shopping_cart,
-            onCartPressed: () {},
-            onFavoritePressed: () {},
-          ),
-        ];
-      case 'headphones':
-        return [
-          ProductItem(
-            imageUrl:
-                'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500',
-            title: 'Wireless Headphones',
-            price: '\$80',
-            cartIcon: Icons.shopping_cart,
-            onCartPressed: () {},
-            onFavoritePressed: () {},
-          ),
-          ProductItem(
-            imageUrl:
-                'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=500',
-            title: 'Gaming Headset',
-            price: '\$150',
-            cartIcon: Icons.shopping_cart,
-            onCartPressed: () {},
-            onFavoritePressed: () {},
-          ),
-        ];
-      case 'shoes':
-        return [
-          ProductItem(
-            imageUrl:
-                'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500',
-            title: 'Nike Air Max',
-            price: '\$90',
-            cartIcon: Icons.shopping_cart,
-            onCartPressed: () {},
-            onFavoritePressed: () {},
-          ),
-          ProductItem(
-            imageUrl:
-                'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500',
-            title: 'Adidas Sneakers',
-            price: '\$110',
-            cartIcon: Icons.shopping_cart,
-            onCartPressed: () {},
-            onFavoritePressed: () {},
-          ),
-        ];
-      default:
-        return [
-          ProductItem(
-            imageUrl:
-                'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500',
-            title: 'Sample Product',
-            price: '\$50',
-            cartIcon: Icons.shopping_cart,
-            onCartPressed: () {},
-            onFavoritePressed: () {},
-          ),
-        ];
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

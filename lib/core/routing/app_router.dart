@@ -19,6 +19,7 @@ import 'package:flutter_shamstore/examples/view_cart_example.dart';
 import 'package:flutter_shamstore/examples/add_to_cart_complete_example.dart';
 import 'package:flutter_shamstore/features/notifications/ui/screens/notifications_screen.dart';
 import 'package:flutter_shamstore/features/notifications/ui/screens/notification_settings_screen.dart';
+import 'package:flutter_shamstore/features/login/ui/enter_reset_code.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
@@ -70,6 +71,13 @@ class AppRouter {
       case Routes.notificationSettingsScreen:
         return MaterialPageRoute(
           builder: (_) => const NotificationSettingsScreen(),
+        );
+      case Routes.enterResetCode:
+        return MaterialPageRoute(
+          builder: (_) {
+            final args = settings.arguments as Map<String, String>;
+            return EnterResetCode(email: args['email']!);
+          },
         );
 
       default:

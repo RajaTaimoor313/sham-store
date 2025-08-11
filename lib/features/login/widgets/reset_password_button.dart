@@ -67,7 +67,7 @@ class ResetPasswordButton extends StatelessWidget {
                       context.read<AuthBloc>().add(
                             AuthResetPasswordRequested(
                               email: email,
-                              token: token,
+                              pin: token,
                               password: password,
                               passwordConfirmation: passwordConfirmation,
                             ),

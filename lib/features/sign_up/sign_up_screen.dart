@@ -48,13 +48,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         // Add a small delay to ensure token is fully set in API service
         await Future.delayed(const Duration(milliseconds: 100));
 
-        // Send email verification after successful registration
-        try {
-          await _authRepository.sendEmailVerification();
-        } catch (e) {
-          // Continue to confirm email screen even if verification email fails
-
-        }
+        // Email verification will be handled via OTP only
+        // Removed sendEmailVerification() to avoid sending duplicate emails
 
         // Registration successful, navigate to confirm email screen
         if (mounted) {

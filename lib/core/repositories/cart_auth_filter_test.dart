@@ -7,7 +7,7 @@ import '../repositories/auth_repository.dart';
 import '../models/auth_model.dart';
 
 class CartAuthFilterTest extends StatefulWidget {
-  const CartAuthFilterTest({Key? key}) : super(key: key);
+  const CartAuthFilterTest({super.key});
 
   @override
   State<CartAuthFilterTest> createState() => _CartAuthFilterTestState();

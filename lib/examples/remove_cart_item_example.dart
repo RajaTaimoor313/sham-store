@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../features/cart/logic/cart_bloc.dart';
 import '../features/cart/logic/cart_event.dart';
 import '../features/cart/logic/cart_state.dart';
-import '../core/di/service_locator.dart';
 
 class RemoveCartItemExample extends StatefulWidget {
   const RemoveCartItemExample({super.key});

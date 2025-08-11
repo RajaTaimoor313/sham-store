@@ -18,16 +18,16 @@ class ForgetPassword extends StatefulWidget {
 
 class _ForgetPasswordState extends State<ForgetPassword> {
   final GlobalKey<ForgetFormState> _formKey = GlobalKey<ForgetFormState>();
-  
+
   String _email = '';
   bool _isFormValid = false;
-  
+
   void _onEmailChanged(String email) {
     setState(() {
       _email = email;
     });
   }
-  
+
   void _onFormValidityChanged(bool isValid) {
     setState(() {
       _isFormValid = isValid;
@@ -83,7 +83,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   Padding(
                     padding: EdgeInsets.only(left: 8.w),
                     child: Text(
-                      'Forgot your password? Dont worry — weve got you.\n Enter your email and we will send you a reset link.',
+                      'Forgot your password? Dont worry — weve got you.\n Enter your email and we will send you a reset code.',
                       style: TextStyle(
                         color: ColorsManager.mainGrey,
                         fontSize: 16.sp,
@@ -93,7 +93,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   ),
                   verticalspace(32.h),
                   Center(
-                    child: SvgPicture.asset('assets/svgs/Forget Password Illustration.svg'),
+                    child: SvgPicture.asset(
+                      'assets/svgs/Forget Password Illustration.svg',
+                    ),
                   ),
 
                   verticalspace(32.h),

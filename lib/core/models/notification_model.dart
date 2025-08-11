@@ -238,15 +238,19 @@ class UpdateNotificationSettingsRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     if (userId != null) data['user_id'] = userId;
-    if (emailNotifications != null)
+    if (emailNotifications != null) {
       data['email_notifications'] = emailNotifications;
-    if (pushNotifications != null)
+    }
+    if (pushNotifications != null) {
       data['push_notifications'] = pushNotifications;
-    if (orderNotifications != null)
+    }
+    if (orderNotifications != null) {
       data['order_notifications'] = orderNotifications;
+    }
     if (userRegistration != null) data['user_registration'] = userRegistration;
-    if (sellerNotifications != null)
+    if (sellerNotifications != null) {
       data['seller_notifications'] = sellerNotifications;
+    }
     if (systemAlerts != null) data['system_alerts'] = systemAlerts;
     if (marketingEmails != null) data['marketing_emails'] = marketingEmails;
     if (weeklyReports != null) data['weekly_reports'] = weeklyReports;

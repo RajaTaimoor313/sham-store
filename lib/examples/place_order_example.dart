@@ -5,7 +5,7 @@ import '../features/cart/logic/cart_bloc.dart';
 import '../core/di/service_locator.dart';
 
 class PlaceOrderExample extends StatefulWidget {
-  const PlaceOrderExample({Key? key}) : super(key: key);
+  const PlaceOrderExample({super.key});
 
   @override
   State<PlaceOrderExample> createState() => _PlaceOrderExampleState();

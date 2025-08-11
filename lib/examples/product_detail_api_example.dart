@@ -149,7 +149,7 @@ class _ProductDetailApiExampleState extends State<ProductDetailApiExample> {
                               ),
                               _buildDetailRow(
                                 'Category',
-                                product.category?.name ?? 'N/A',
+                                product.category.name ?? 'N/A',
                               ),
                               const SizedBox(height: 16),
                               if (product.displayImage.isNotEmpty)

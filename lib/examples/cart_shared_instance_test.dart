@@ -6,7 +6,7 @@ import 'package:flutter_shamstore/features/cart/logic/cart_state.dart';
 
 /// Test widget to verify that CartBloc is shared across the app
 /// This widget demonstrates that the same CartBloc instance is used
-/// throughout the application when accessed via BlocProvider.of<CartBloc>(context)
+/// throughout the application when accessed via BlocProvider.of CartBloc(context)
 class CartSharedInstanceTest extends StatelessWidget {
   const CartSharedInstanceTest({super.key});
 

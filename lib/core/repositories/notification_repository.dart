@@ -36,7 +36,7 @@ class NotificationRepository {
       );
 
       final response = await _apiService.post(
-        '${ApiConstants.notifications}/mark-as-read',
+        ApiConstants.markNotificationsAsRead,
         body: request.toJson(),
         requireAuth: true,
       );

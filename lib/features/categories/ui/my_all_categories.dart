@@ -6,7 +6,6 @@ import 'package:flutter_shamstore/core/themina/font_weight_help.dart';
 import 'package:flutter_shamstore/features/categories/ui/product_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_shamstore/core/localization/localization_helper.dart';
-import 'package:flutter_shamstore/core/localization/language_bloc.dart';
 import 'package:flutter_shamstore/features/categories/logic/category_cubit.dart';
 import 'package:flutter_shamstore/features/categories/data/models/category_model.dart';
 import 'package:flutter_shamstore/core/di/service_locator.dart';

@@ -6,6 +6,7 @@ import 'package:flutter_shamstore/core/localization/localization_helper.dart';
 import 'package:flutter_shamstore/core/localization/language_bloc.dart';
 import 'package:flutter_shamstore/features/auth/logic/auth_bloc.dart';
 import 'package:flutter_shamstore/core/utils/text_utils.dart';
+import 'package:flutter_shamstore/core/routing/routes.dart';
 
 class ImageNameNotif extends StatelessWidget {
   const ImageNameNotif({super.key});
@@ -155,7 +156,17 @@ class ImageNameNotif extends StatelessWidget {
                   height: 25.h,
                   child: FloatingActionButton(
                     onPressed: () {
-                      // الكود اللي بدك ينفذ لما المستخدم يضغط الكبسة
+                      // Show toast message
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Server problem is fetching Notification'),
+                          duration: Duration(seconds: 2),
+                          backgroundColor: Colors.orange,
+                        ),
+                      );
+                      
+                      // Navigate to notifications screen
+                      Navigator.pushNamed(context, Routes.notificationsScreen);
                     },
                     mini: true, // عشان يكون صغير
                     child: Icon(Icons.notifications, size: 15.sp),

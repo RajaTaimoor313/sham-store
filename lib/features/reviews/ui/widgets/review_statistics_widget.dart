@@ -5,9 +5,9 @@ class ReviewStatisticsWidget extends StatelessWidget {
   final ReviewStatistics statistics;
 
   const ReviewStatisticsWidget({
-    Key? key,
+    super.key,
     required this.statistics,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

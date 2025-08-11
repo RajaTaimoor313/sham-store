@@ -13,11 +13,11 @@ class AddReviewDialog extends StatefulWidget {
   final VoidCallback? onReviewAdded;
 
   const AddReviewDialog({
-    Key? key,
+    super.key,
     required this.productId,
     this.existingReview,
     this.onReviewAdded,
-  }) : super(key: key);
+  });
 
   @override
   State<AddReviewDialog> createState() => _AddReviewDialogState();
@@ -30,7 +30,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
   final ImagePicker _imagePicker = ImagePicker();
   
   double _rating = 5.0;
-  List<File> _selectedImages = [];
+  final List<File> _selectedImages = [];
   bool _isSubmitting = false;
 
   @override

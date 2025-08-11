@@ -6,7 +6,7 @@ import '../features/cart/logic/cart_state.dart';
 import '../core/di/service_locator.dart';
 
 class ViewCartExample extends StatefulWidget {
-  const ViewCartExample({Key? key}) : super(key: key);
+  const ViewCartExample({super.key});
 
   @override
   State<ViewCartExample> createState() => _ViewCartExampleState();
@@ -184,8 +184,7 @@ class _ViewCartExampleState extends State<ViewCartExample> {
                                               ),
                                             ),
                                             title: Text(
-                                              item.productName ??
-                                                  'Product ${item.productId}',
+                                              item.productName,
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w500,
                                               ),

@@ -284,24 +284,28 @@ class ChangePasswordRequest {
 // Forgot Password Request Model
 class ForgotPasswordRequest {
   final String email;
+  final String? phone;
 
-  ForgotPasswordRequest({required this.email});
+  ForgotPasswordRequest({required this.email, this.phone});
 
   Map<String, dynamic> toJson() {
-    return {'email': email};
+    return {
+      'email': email,
+      'phone': phone ?? '',
+    };
   }
 }
 
 // Reset Password Request Model
 class ResetPasswordRequest {
   final String email;
-  final String token;
+  final String pin;
   final String password;
   final String passwordConfirmation;
 
   ResetPasswordRequest({
     required this.email,
-    required this.token,
+    required this.pin,
     required this.password,
     required this.passwordConfirmation,
   });
@@ -309,7 +313,7 @@ class ResetPasswordRequest {
   Map<String, dynamic> toJson() {
     return {
       'email': email,
-      'token': token,
+      'pin': pin,
       'password': password,
       'password_confirmation': passwordConfirmation,
     };

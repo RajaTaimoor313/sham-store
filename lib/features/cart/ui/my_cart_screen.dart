@@ -55,24 +55,36 @@ class _MyCartScreenState extends State<MyCartScreen> {
               ),
             ],
           ),
-          body: BlocBuilder<CartBloc, CartState>(
-            builder: (context, state) {
-              if (state is CartLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-
+          body: BlocListener<CartBloc, CartState>(
+            listener: (context, state) {
               if (state is CartError) {
-                return Center(child: Text(state.message));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                    backgroundColor: Colors.red,
+                  ),
+                );
               }
-
-              if (state is CartLoaded && state.cart.items.isEmpty) {
-                return Center(child: Text(context.tr('cart_empty')));
-              }
-
-              return _CartItemList(
-                items: state is CartLoaded ? state.cart.items : [],
-              );
             },
+            child: BlocBuilder<CartBloc, CartState>(
+              builder: (context, state) {
+                if (state is CartLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (state is CartError) {
+                  return Center(child: Text(state.message));
+                }
+
+                if (state is CartLoaded && state.cart.items.isEmpty) {
+                  return Center(child: Text(context.tr('cart_empty')));
+                }
+
+                return _CartItemList(
+                  items: state is CartLoaded ? state.cart.items : [],
+                );
+              },
+            ),
           ),
         );
       },
@@ -89,30 +101,11 @@ class _CartItemList extends StatefulWidget {
 }
 
 class _CartItemListState extends State<_CartItemList> {
-  late List<CartItem> orders;
-  late List<int> quantities;
-
-  @override
-  void initState() {
-    super.initState();
-    orders = List.from(widget.items);
-    quantities = orders.map((item) => item.quantity).toList();
-  }
-
-  @override
-  void didUpdateWidget(_CartItemList oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.items != oldWidget.items) {
-      orders = List.from(widget.items);
-      quantities = orders.map((item) => item.quantity).toList();
-    }
-  }
-
   double _calculateTotal() {
     double total = 0;
-    for (int i = 0; i < orders.length; i++) {
-      final price = orders[i].unitPrice;
-      final qty = quantities[i];
+    for (int i = 0; i < widget.items.length; i++) {
+      final price = widget.items[i].unitPrice;
+      final qty = widget.items[i].quantity;
       total += price * qty;
     }
     return total;
@@ -120,7 +113,7 @@ class _CartItemListState extends State<_CartItemList> {
 
   @override
   Widget build(BuildContext context) {
-    if (orders.isEmpty) {
+    if (widget.items.isEmpty) {
       return Center(
         child: Text(
           context.tr('cart_empty'),
@@ -134,10 +127,9 @@ class _CartItemListState extends State<_CartItemList> {
         Expanded(
           child: ListView.builder(
             padding: EdgeInsets.all(10.w),
-            itemCount: orders.length,
+            itemCount: widget.items.length,
             itemBuilder: (context, index) {
-              final item = orders[index];
-              final quantity = quantities[index];
+              final item = widget.items[index];
 
               return Dismissible(
                 key: Key(item.id.toString()),
@@ -149,34 +141,21 @@ class _CartItemListState extends State<_CartItemList> {
                   child: Icon(Icons.delete, color: Colors.white, size: 28.sp),
                 ),
                 onDismissed: (direction) {
-                  final removedItem = orders[index];
-                  final removedQuantity = quantities[index];
+                  final removedItem = item;
 
-                  setState(() {
-                    orders.removeAt(index);
-                    quantities.removeAt(index);
-                  });
+                  // Call the API to remove the item from cart
+                  context.read<CartBloc>().add(RemoveCartItem(id: removedItem.id));
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
                         '${removedItem.productName} ${context.tr('removed_from_cart')}',
                       ),
-                      action: SnackBarAction(
-                        label: context.tr('undo'),
-                        onPressed: () {
-                          setState(() {
-                            orders.insert(index, removedItem);
-                            quantities.insert(index, removedQuantity);
-                          });
-                        },
-                        textColor: ColorsManager.mainOrange,
-                      ),
-                      duration: Duration(seconds: 4),
+                      duration: Duration(seconds: 2),
                     ),
                   );
                 },
-                child: _buildCartItem(item, index, quantity),
+                child: _buildCartItem(item, index),
               );
             },
           ),
@@ -223,7 +202,7 @@ class _CartItemListState extends State<_CartItemList> {
     );
   }
 
-  Widget _buildCartItem(CartItem item, int index, int quantity) {
+  Widget _buildCartItem(CartItem item, int index) {
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.all(10.w),
@@ -291,7 +270,7 @@ class _CartItemListState extends State<_CartItemList> {
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    '$quantity ${context.tr('pieces')}',
+                    '${item.quantity} ${context.tr('pieces')}',
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: ColorsManager.mainGrey,
@@ -317,25 +296,31 @@ class _CartItemListState extends State<_CartItemList> {
                 children: [
                   InkWell(
                     onTap: () {
-                      if (quantities[index] > 1) {
-                        setState(() {
-                          quantities[index]--;
-                        });
+                      if (item.quantity > 1) {
+                        context.read<CartBloc>().add(
+                          UpdateCartItemQuantity(
+                            cartItemId: item.id.toString(),
+                            quantity: item.quantity - 1,
+                          ),
+                        );
                       }
                     },
                     child: Icon(Icons.remove_circle_outline, size: 18.sp),
                   ),
                   SizedBox(width: 4.w),
                   Text(
-                    '${quantities[index]}',
+                    '${item.quantity}',
                     style: TextStyle(fontSize: 13.sp),
                   ),
                   SizedBox(width: 4.w),
                   InkWell(
                     onTap: () {
-                      setState(() {
-                        quantities[index]++;
-                      });
+                      context.read<CartBloc>().add(
+                        UpdateCartItemQuantity(
+                          cartItemId: item.id.toString(),
+                          quantity: item.quantity + 1,
+                        ),
+                      );
                     },
                     child: Icon(Icons.add_circle_outline, size: 18.sp),
                   ),

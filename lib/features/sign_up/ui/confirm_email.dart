@@ -7,7 +7,6 @@ import 'package:flutter_shamstore/core/helpers/spacing.dart';
 import 'package:flutter_shamstore/core/themina/colors.dart';
 import 'package:flutter_shamstore/features/auth/logic/auth_bloc.dart';
 import 'package:flutter_shamstore/core/routing/routes.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ConfirmEmail extends StatefulWidget {
   const ConfirmEmail({super.key});
@@ -70,11 +69,6 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
     }
   }
 
-  void _onOtpBackspace(String value, int index) {
-    if (value.isEmpty && index > 0) {
-      _focusNodes[index - 1].requestFocus();
-    }
-  }
 
   String _getOtpCode() {
     return _otpControllers.map((controller) => controller.text).join();
@@ -121,7 +115,7 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
               ),
             );
             if (state.message.contains('Email verified')) {
-              Navigator.pushReplacementNamed(context, Routes.navigationMenu);
+              Navigator.pushReplacementNamed(context, Routes.loginscreen);
             }
           } else if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(

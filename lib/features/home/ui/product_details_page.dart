@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_shamstore/core/helpers/head_text.dart';
 import 'package:flutter_shamstore/core/helpers/spacing.dart';
 import 'package:flutter_shamstore/core/themina/colors.dart';
 import 'package:flutter_shamstore/core/themina/font_weight_help.dart';
@@ -10,9 +9,6 @@ import 'package:flutter_shamstore/features/cart/ui/my_cart_screen.dart';
 import 'package:flutter_shamstore/features/cart/logic/cart_bloc.dart';
 import 'package:flutter_shamstore/features/cart/logic/cart_event.dart';
 import 'package:flutter_shamstore/features/cart/logic/cart_state.dart';
-import 'package:flutter_shamstore/features/categories/ui/product_page.dart';
-import 'package:flutter_shamstore/features/home/ui/widgets/review_rating_page.dart';
-import 'package:flutter_shamstore/features/settings/ui/widgets/favourites.dart';
 import 'package:flutter_shamstore/features/wishlist/logic/wishlist_bloc.dart';
 import 'package:flutter_shamstore/features/reviews/logic/review_bloc.dart';
 import 'package:flutter_shamstore/features/reviews/logic/review_event.dart';
