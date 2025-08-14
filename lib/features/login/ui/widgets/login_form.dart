@@ -122,7 +122,7 @@ class _LoginFormState extends State<LoginForm> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    context.tr('forget_password_title') + '?',
+                    '${context.tr('forget_password_title')}?',
                     style: TextStyle(
                       fontSize: 16.sp,
                       color: ColorsManager.mainBlue,

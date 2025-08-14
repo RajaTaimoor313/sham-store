@@ -58,7 +58,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: context.tr('forget_password_title') + '\n',
+                            text: '${context.tr('forget_password_title')}\n',
                             style: TextStyle(
                               color: ColorsManager.mainBlue,
                               fontSize: 40.sp,

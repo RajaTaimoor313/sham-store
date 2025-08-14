@@ -41,9 +41,13 @@ class ApiService {
     }
 
     // Debug logging to track headers
-    print('🔑 API Headers - includeAuth: $includeAuth, hasToken: ${_authToken != null}');
+    print(
+      '🔑 API Headers - includeAuth: $includeAuth, hasToken: ${_authToken != null}',
+    );
     if (_authToken != null) {
-      print('🔑 Auth token (first 20 chars): ${_authToken!.substring(0, _authToken!.length > 20 ? 20 : _authToken!.length)}...');
+      print(
+        '🔑 Auth token (first 20 chars): ${_authToken!.substring(0, _authToken!.length > 20 ? 20 : _authToken!.length)}...',
+      );
     }
     print('🔑 API Headers: $headers');
 
@@ -171,13 +175,47 @@ class ApiService {
           return ApiResponse.success(responseData as T);
         }
       } else {
-        final errorMessage =
-            responseData['message'] ?? 'Unknown error occurred';
+        // Extract field-level validation messages if present (e.g., { data: { email: ["The email has already been taken."] } })
+        final extracted = _extractFirstErrorMessage(responseData);
+        final errorMessage = extracted.isNotEmpty
+            ? extracted
+            : (responseData['message'] ?? 'Unknown error occurred');
 
         return ApiResponse.error(errorMessage);
       }
     } catch (e) {
       return ApiResponse.error('Failed to parse response: ${e.toString()}');
     }
+  }
+
+  // Pull the first meaningful error message from common backend error shapes
+  String _extractFirstErrorMessage(dynamic responseData) {
+    try {
+      final dynamic errorContainer = responseData is Map<String, dynamic>
+          ? (responseData['errors'] ?? responseData['data'])
+          : null;
+
+      if (errorContainer is Map) {
+        for (final entry in errorContainer.entries) {
+          final value = entry.value;
+          if (value is List && value.isNotEmpty) {
+            final first = value.first;
+            if (first is String && first.trim().isNotEmpty) {
+              return first;
+            }
+          } else if (value is String && value.trim().isNotEmpty) {
+            return value;
+          }
+        }
+      }
+
+      if (responseData is Map && responseData['error'] is String) {
+        return (responseData['error'] as String).trim();
+      }
+    } catch (_) {
+      // Ignore parsing errors and fall back to the generic message
+    }
+
+    return '';
   }
 }

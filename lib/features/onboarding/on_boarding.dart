@@ -61,7 +61,7 @@ class OnBoarding1 extends StatelessWidget {
                   ),
                   children: [
                     TextSpan(
-                      text: context.tr('onboarding1_title_part1') + ' ',
+                      text: '${context.tr('onboarding1_title_part1')} ',
                       style: TextStyle(color: ColorsManager.mainBlue),
                     ),
                     TextSpan(
@@ -172,7 +172,7 @@ class OnBoarding2 extends StatelessWidget {
                   ),
                   children: [
                     TextSpan(
-                      text: context.tr('onboarding2_title_part1') + ' ',
+                      text: '${context.tr('onboarding2_title_part1')} ',
                       style: TextStyle(color: ColorsManager.mainBlue),
                     ),
                     TextSpan(
@@ -299,7 +299,7 @@ class OnBoarding3 extends StatelessWidget {
                   ),
                   children: [
                     TextSpan(
-                      text: context.tr('onboarding3_title_part1') + ' ',
+                      text: '${context.tr('onboarding3_title_part1')} ',
                       style: TextStyle(color: ColorsManager.mainBlue),
                     ),
                     TextSpan(

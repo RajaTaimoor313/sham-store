@@ -539,8 +539,9 @@ class OrderRepository {
       if (paymentMethod != null) data['payment_method'] = paymentMethod;
       if (paymentStatus != null) data['payment_status'] = paymentStatus;
       if (notes != null) data['notes'] = notes;
-      if (deliveryDate != null)
+      if (deliveryDate != null) {
         data['delivery_date'] = deliveryDate.toIso8601String();
+      }
 
       final response = await _apiService.put(
         '${ApiConstants.updateOrder}/$orderId',

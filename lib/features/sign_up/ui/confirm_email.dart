@@ -145,7 +145,7 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: context.tr('confirm_email_title') + '\n',
+                            text: '${context.tr('confirm_email_title')}\n',
                             style: TextStyle(
                               color: ColorsManager.mainBlue,
                               fontSize: 40.sp,

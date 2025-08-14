@@ -194,7 +194,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (response.isSuccess && response.data != null) {
         emit(AuthAuthenticated(user: response.data!.user));
       } else {
-        emit(AuthError(message: response.message ?? 'Login failed'));
+        emit(AuthError(message: response.getErrorMessage('Login failed')));
       }
     } catch (e) {
       emit(AuthError(message: 'Login failed: ${e.toString()}'));
@@ -220,7 +220,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (response.isSuccess && response.data != null) {
         emit(AuthAuthenticated(user: response.data!.user));
       } else {
-        emit(AuthError(message: response.message ?? 'Registration failed'));
+        emit(
+          AuthError(message: response.getErrorMessage('Registration failed')),
+        );
       }
     } catch (e) {
       emit(AuthError(message: 'Registration failed: ${e.toString()}'));

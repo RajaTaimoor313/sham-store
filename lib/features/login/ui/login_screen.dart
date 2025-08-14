@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: context.tr('login') + '\n',
+                          text: '${context.tr('login')}\n',
                           style: TextStyle(
                             color: ColorsManager.mainBlue,
                             fontSize: 40.sp,

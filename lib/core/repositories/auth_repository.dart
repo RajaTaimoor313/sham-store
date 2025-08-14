@@ -33,7 +33,10 @@ class AuthRepository {
         return ApiResponse.success(authResponse);
       }
 
-      return ApiResponse.error(response.message ?? 'Login failed');
+      // Map backend error to a user-friendly message
+      final rawError = response.getErrorMessage('Login failed');
+      final friendlyError = _mapLoginError(rawError);
+      return ApiResponse.error(friendlyError);
     } catch (e) {
       return ApiResponse.error('Login failed: ${e.toString()}');
     }
@@ -64,7 +67,8 @@ class AuthRepository {
         return ApiResponse.success(authResponse);
       }
 
-      return ApiResponse.error(response.message ?? 'Registration failed');
+      // Surface the exact backend validation message (e.g., field errors)
+      return ApiResponse.error(response.getErrorMessage('Registration failed'));
     } catch (e) {
       return ApiResponse.error('Registration failed: ${e.toString()}');
     }
@@ -337,3 +341,23 @@ class AuthRepository {
     }
   }
 }
+
+// Private helpers (file-private)
+String _mapLoginError(String errorMessage) {
+  final normalized = errorMessage.toLowerCase();
+  // Common backend messages: "invalid credentials", "invalid email or password", "wrong password"
+  final looksLikeWrongPassword =
+      (normalized.contains('invalid') &&
+          (normalized.contains('password') ||
+              normalized.contains('credentials'))) ||
+      normalized.contains('wrong password') ||
+      normalized.contains('incorrect password');
+
+  if (looksLikeWrongPassword) {
+    return 'Incorrect Password';
+  }
+
+  return errorMessage;
+}
+
+// _mapRegisterError removed; we now surface backend validation messages directly

@@ -61,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(response.message ?? 'Registration failed'),
+              content: Text(response.getErrorMessage('Registration failed')),
               backgroundColor: Colors.red,
             ),
           );
@@ -71,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Registration failed: ${e.toString()}'),
+            content: Text('Registration failed'),
             backgroundColor: Colors.red,
           ),
         );
@@ -106,7 +106,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: context.tr('sign_up') + '\n',
+                          text: '${context.tr('sign_up')}\n',
                           style: TextStyle(
                             color: ColorsManager.mainBlue,
                             fontSize: 40.sp,
