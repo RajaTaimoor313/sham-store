@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/models/review_model.dart';
 import '../product_reviews_screen.dart';
+import '../../logic/review_bloc.dart';
 
 class ReviewSummaryWidget extends StatelessWidget {
   final String productId;
@@ -26,9 +28,7 @@ class ReviewSummaryWidget extends StatelessWidget {
       return const Card(
         child: Padding(
           padding: EdgeInsets.all(16),
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
+          child: Center(child: CircularProgressIndicator()),
         ),
       );
     }
@@ -42,10 +42,7 @@ class ReviewSummaryWidget extends StatelessWidget {
             children: [
               const Text(
                 'Customer Reviews',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
               Center(
@@ -67,9 +64,7 @@ class ReviewSummaryWidget extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       'Be the first to review this product!',
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-                      ),
+                      style: TextStyle(color: Colors.grey.shade600),
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton(
@@ -96,21 +91,19 @@ class ReviewSummaryWidget extends StatelessWidget {
               children: [
                 const Text(
                   'Customer Reviews',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const Spacer(),
                 TextButton(
-                  onPressed: onViewAllPressed ?? () => _navigateToReviews(context),
+                  onPressed:
+                      onViewAllPressed ?? () => _navigateToReviews(context),
                   child: const Text('View All'),
                 ),
               ],
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Rating summary
             Row(
               children: [
@@ -179,7 +172,7 @@ class ReviewSummaryWidget extends StatelessWidget {
                 ),
               ],
             ),
-            
+
             // Rating distribution (compact)
             if (statistics!.totalReviews > 0)
               Column(
@@ -188,7 +181,7 @@ class ReviewSummaryWidget extends StatelessWidget {
                   _buildCompactRatingDistribution(),
                 ],
               ),
-            
+
             // Recent reviews preview
             if (recentReviews.isNotEmpty)
               Column(
@@ -207,12 +200,14 @@ class ReviewSummaryWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  ...recentReviews.take(2).map((review) => _buildReviewPreview(review)),
+                  ...recentReviews
+                      .take(2)
+                      .map((review) => _buildReviewPreview(review)),
                 ],
               ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Action buttons
             Row(
               children: [
@@ -242,23 +237,11 @@ class ReviewSummaryWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: List.generate(5, (index) {
         if (index < rating.floor()) {
-          return const Icon(
-            Icons.star,
-            color: Colors.amber,
-            size: 16,
-          );
+          return const Icon(Icons.star, color: Colors.amber, size: 16);
         } else if (index < rating) {
-          return const Icon(
-            Icons.star_half,
-            color: Colors.amber,
-            size: 16,
-          );
+          return const Icon(Icons.star_half, color: Colors.amber, size: 16);
         } else {
-          return const Icon(
-            Icons.star_border,
-            color: Colors.amber,
-            size: 16,
-          );
+          return const Icon(Icons.star_border, color: Colors.amber, size: 16);
         }
       }),
     );
@@ -266,7 +249,7 @@ class ReviewSummaryWidget extends StatelessWidget {
 
   Widget _buildCompactRatingDistribution() {
     final total = statistics!.totalReviews;
-    
+
     return Column(
       children: [
         _buildCompactRatingBar(5, statistics!.fiveStarCount, total),
@@ -280,24 +263,17 @@ class ReviewSummaryWidget extends StatelessWidget {
 
   Widget _buildCompactRatingBar(int stars, int count, int total) {
     final percentage = total > 0 ? (count / total) : 0.0;
-    
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 1),
       child: Row(
         children: [
           Text(
             '$stars',
-            style: const TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w500,
-            ),
+            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
           ),
           const SizedBox(width: 2),
-          const Icon(
-            Icons.star,
-            color: Colors.amber,
-            size: 10,
-          ),
+          const Icon(Icons.star, color: Colors.amber, size: 10),
           const SizedBox(width: 6),
           Expanded(
             child: Container(
@@ -323,10 +299,7 @@ class ReviewSummaryWidget extends StatelessWidget {
             width: 20,
             child: Text(
               '$count',
-              style: const TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.w500,
-              ),
+              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
               textAlign: TextAlign.end,
             ),
           ),
@@ -361,11 +334,7 @@ class ReviewSummaryWidget extends StatelessWidget {
                 ),
                 const Spacer(),
                 if (review.verifiedPurchase)
-                  Icon(
-                    Icons.verified,
-                    size: 12,
-                    color: Colors.green.shade600,
-                  ),
+                  Icon(Icons.verified, size: 12, color: Colors.green.shade600),
               ],
             ),
             if (review.title.isNotEmpty)
@@ -386,10 +355,7 @@ class ReviewSummaryWidget extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               review.comment,
-              style: const TextStyle(
-                fontSize: 12,
-                height: 1.3,
-              ),
+              style: const TextStyle(fontSize: 12, height: 1.3),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -400,11 +366,16 @@ class ReviewSummaryWidget extends StatelessWidget {
   }
 
   void _navigateToReviews(BuildContext context) {
+    // Capture the parent context to read the existing ReviewBloc
+    final parentContext = context;
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ProductReviewsScreen(
-          productId: productId,
-          productName: productName,
+        builder: (_) => BlocProvider.value(
+          value: parentContext.read<ReviewBloc>(),
+          child: ProductReviewsScreen(
+            productId: productId,
+            productName: productName,
+          ),
         ),
       ),
     );
