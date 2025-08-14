@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_shamstore/core/helpers/spacing.dart';
 import 'package:flutter_shamstore/core/widgets/app_text_form_field.dart';
+import 'package:flutter_shamstore/core/localization/localization_helper.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -14,14 +15,16 @@ class SignUpFormState extends State<SignUpForm> {
   final TextEditingController _contactController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   // Getters to expose controllers
   TextEditingController get usernameController => _usernameController;
   TextEditingController get contactController => _contactController;
   TextEditingController get emailController => _emailController;
   TextEditingController get passwordController => _passwordController;
-  TextEditingController get confirmPasswordController => _confirmPasswordController;
+  TextEditingController get confirmPasswordController =>
+      _confirmPasswordController;
 
   @override
   void dispose() {
@@ -35,35 +38,35 @@ class SignUpFormState extends State<SignUpForm> {
 
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Email is required';
+      return context.tr('email_required');
     }
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!emailRegex.hasMatch(value)) {
-      return 'Please enter a valid email address';
+      return context.tr('enter_valid_email');
     }
     return null;
   }
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Password is required';
+      return context.tr('password_required');
     }
     return null;
   }
 
   String? _validateConfirmPassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Confirm password is required';
+      return context.tr('confirm_password_required');
     }
     if (value != _passwordController.text) {
-      return 'Passwords do not match';
+      return context.tr('passwords_do_not_match');
     }
     return null;
   }
 
   String? _validateRequired(String? value, String fieldName) {
     if (value == null || value.isEmpty) {
-      return '$fieldName is required';
+      return context.tr('field_required').replaceFirst('%s', fieldName);
     }
     return null;
   }
@@ -73,43 +76,43 @@ class SignUpFormState extends State<SignUpForm> {
     return Column(
       children: [
         AppTextFormField(
-          labelText: 'Username',
+          labelText: context.tr('name'),
           prefixIcon: const Icon(Icons.person),
-          hintText: 'Enter Username',
+          hintText: context.tr('enter_name'),
           controller: _usernameController,
-          validator: (value) => _validateRequired(value, 'Username'),
+          validator: (value) => _validateRequired(value, context.tr('name')),
         ),
         verticalspace(15),
         AppTextFormField(
-          labelText: 'Contact No',
+          labelText: context.tr('contact'),
           prefixIcon: const Icon(Icons.phone),
-          hintText: 'Enter Contact Number',
+          hintText: context.tr('enter_contact_number'),
           controller: _contactController,
-          validator: (value) => _validateRequired(value, 'Contact Number'),
+          validator: (value) => _validateRequired(value, context.tr('contact')),
         ),
         verticalspace(15),
         AppTextFormField(
-          labelText: 'Email',
+          labelText: context.tr('email'),
           prefixIcon: const Icon(Icons.email),
-          hintText: 'Enter Email',
+          hintText: context.tr('enter_email'),
           controller: _emailController,
           validator: _validateEmail,
         ),
         verticalspace(15),
         AppTextFormField(
-          labelText: 'Password',
+          labelText: context.tr('new_password'),
           prefixIcon: const Icon(Icons.lock),
           isObscureText: true,
-          hintText: 'Enter Password',
+          hintText: context.tr('enter_new_password'),
           controller: _passwordController,
           validator: _validatePassword,
         ),
         verticalspace(15),
         AppTextFormField(
-          labelText: 'Confirm Password',
+          labelText: context.tr('confirm_password'),
           prefixIcon: const Icon(Icons.lock),
           isObscureText: true,
-          hintText: 'Re-enter Password',
+          hintText: context.tr('enter_confirm_password'),
           controller: _confirmPasswordController,
           validator: _validateConfirmPassword,
         ),

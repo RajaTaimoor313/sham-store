@@ -15,6 +15,7 @@ class AppLocalizations {
       'support': 'Support',
       'rate_us': 'Rate Us',
       'share_app': 'Share App',
+      'feedback': 'Feedback',
       'logout': 'Logout',
 
       // Language Dialog
@@ -57,6 +58,48 @@ class AppLocalizations {
       'account_number': 'Account Number',
       'enter_account_number': 'Enter Account Number',
       'payment_summary': 'Payment Summary',
+      'sub_total': 'Sub Total',
+      'delivery_charges': 'Delivery Charges',
+      'discount': 'Discount',
+      'grand_total': 'Grand Total',
+      'checkout': 'Checkout',
+      'cash_on_delivery': 'Cash on Delivery',
+      'pay_on_delivery': 'Pay when your order is delivered',
+      'delivery_address_description':
+          'Add or select your delivery address to receive your order on time.',
+      'state': 'State',
+      'enter_state': 'Enter Your State',
+      'city': 'City',
+      'enter_city': 'Enter Your City',
+      'town': 'Town',
+      'enter_town': 'Enter Your Town',
+      'street_no': 'Street No',
+      'enter_street_no': 'Enter Your Street No',
+      'save_address': 'Save Address',
+      'confirmation': 'Confirmation',
+      'payment_successful': 'Payment Successful!',
+      'order_placed_message':
+          'Your order has been placed and is being\n processed. Thank you for shopping with us.',
+      'skip': 'Skip',
+      'next': 'Next',
+      'previous': 'Previous',
+      'onboarding1_title_part1': 'Shop All',
+      'onboarding1_title_part2': 'You Need',
+      'onboarding1_subtitle':
+          'Browse groceries, essentials, and more — all in\n one place.',
+      'onboarding2_title_part1': 'Big Deals,',
+      'onboarding2_title_part2': 'Small Prices',
+      'onboarding2_subtitle':
+          'Save more every day with exclusive discounts\n and bundles.',
+      'onboarding3_title_part1': 'Fast & Easy',
+      'onboarding3_title_part2': 'Delivery',
+      'onboarding3_subtitle':
+          'Your orders delivered quickly, safely, and on\n time.',
+      'enter_name': 'Enter Name',
+      'enter_contact_number': 'Enter Contact Number',
+      'confirm_password_required': 'Confirm password is required',
+      'passwords_do_not_match': 'Passwords do not match',
+      'field_required': '%s is required',
       // Notifications
       'today': 'Today',
       'mark_all_read': 'Mark all as read',
@@ -73,10 +116,45 @@ class AppLocalizations {
       'login': 'Login',
       'or': 'OR',
       'login_with_google': 'Login with Google',
+      'enter_credentials_login':
+          'Enter credentials to login to the application.',
 
       // Sign Up
       'sign_up': 'Sign Up',
       'already_have_account': 'Already have an account? ',
+      'fill_fields_create_account':
+          'Fill following fields to create your account.',
+      // Forget Password
+      'forget_password_title': 'Forget Password',
+      'forget_password_description':
+          "Forgot your password? Don't worry — we've got you.\n Enter your email and we will send you a reset code.",
+
+      // Feedback
+      'feedback_title': 'Feedback',
+      'create_feedback': 'Create Feedback',
+      'view_feedbacks': 'View Feedbacks',
+      'create_new_feedback': 'Create New Feedback',
+      'update_feedback': 'Update Feedback',
+      'rating_1_5': 'Rating (1-5 stars)',
+      'scale_1_10': 'Scale (1-10)',
+      'selected': 'Selected',
+      'feedback_content': 'Feedback Content',
+      'enter_feedback_hint': 'Enter your feedback here...',
+      'please_enter_feedback': 'Please enter your feedback',
+      'processing': 'Processing...',
+      'submit_feedback': 'Submit Feedback',
+      'update_feedback_button': 'Update Feedback',
+      'cancel_update': 'Cancel Update',
+      'all_feedbacks': 'All Feedbacks',
+      'search': 'Search',
+      'no_feedbacks_found': 'No feedbacks found',
+      'created': 'Created',
+      'delete_feedback': 'Delete Feedback',
+      'delete_feedback_confirm':
+          'Are you sure you want to delete this feedback?',
+      'feedback_created_successfully': 'Feedback created successfully!',
+      'feedback_updated_successfully': 'Feedback updated successfully!',
+      'feedback_deleted_successfully': 'Feedback deleted successfully!',
 
       // General
       'search_customers': 'Search Customers',
@@ -139,6 +217,18 @@ class AppLocalizations {
 
       // Profile Screen
       'name': 'Name',
+      // Validation and forms
+      'email_required': 'Email is required',
+      'enter_valid_email': 'Please enter a valid email address',
+      'password_required': 'Password is required',
+      'enter_email': 'Enter Email',
+      // OTP / Email verification
+      'confirm_email_title': 'Confirm Email',
+      'otp_sent_description':
+          "We've sent a 6-digit OTP to your email. Please enter the code below to verify your account.",
+      'verify_otp': 'Verify OTP',
+      'resend_otp': 'Resend OTP',
+      'enter_complete_otp': 'Please enter the complete 6-digit OTP',
     },
     'ar': {
       // Settings Screen
@@ -155,6 +245,7 @@ class AppLocalizations {
       'support': 'الدعم',
       'rate_us': 'قيمنا',
       'share_app': 'شارك التطبيق',
+      'feedback': 'التعليقات',
       'logout': 'تسجيل الخروج',
 
       // Language Dialog
@@ -197,6 +288,46 @@ class AppLocalizations {
       'account_number': 'رقم الحساب',
       'enter_account_number': 'أدخل رقم الحساب',
       'payment_summary': 'ملخص الدفع',
+      'sub_total': 'الإجمالي الفرعي',
+      'delivery_charges': 'رسوم التوصيل',
+      'discount': 'الخصم',
+      'grand_total': 'الإجمالي الكلي',
+      'checkout': 'إتمام الشراء',
+      'cash_on_delivery': 'الدفع عند الاستلام',
+      'pay_on_delivery': 'ادفع عند تسليم الطلب',
+      'delivery_address_description':
+          'أضف أو اختر عنوان التوصيل لاستلام طلبك في الوقت المحدد.',
+      'state': 'الولاية',
+      'enter_state': 'أدخل ولايتك',
+      'city': 'المدينة',
+      'enter_city': 'أدخل مدينتك',
+      'town': 'المنطقة',
+      'enter_town': 'أدخل منطقتك',
+      'street_no': 'رقم الشارع',
+      'enter_street_no': 'أدخل رقم الشارع',
+      'save_address': 'حفظ العنوان',
+      'confirmation': 'تأكيد',
+      'payment_successful': 'تم الدفع بنجاح!',
+      'order_placed_message':
+          'تم وضع طلبك وهو قيد المعالجة\n شكراً لتسوقك معنا.',
+      'skip': 'تخطي',
+      'next': 'التالي',
+      'previous': 'السابق',
+      'onboarding1_title_part1': 'تسوق كل',
+      'onboarding1_title_part2': 'ما تحتاجه',
+      'onboarding1_subtitle':
+          'تصفح البقالة والضروريات والمزيد — في\n مكان واحد.',
+      'onboarding2_title_part1': 'عروض كبيرة،',
+      'onboarding2_title_part2': 'أسعار صغيرة',
+      'onboarding2_subtitle': 'وفّر المزيد يومياً مع خصومات حصرية\n وباقات.',
+      'onboarding3_title_part1': 'توصيل سريع وسهل',
+      'onboarding3_title_part2': 'للجميع',
+      'onboarding3_subtitle': 'طلباتك تُسلّم بسرعة وأمان\n وفي الوقت المحدد.',
+      'enter_name': 'أدخل الاسم',
+      'enter_contact_number': 'أدخل رقم الاتصال',
+      'confirm_password_required': 'تأكيد كلمة المرور مطلوب',
+      'passwords_do_not_match': 'كلمتا المرور غير متطابقتين',
+      'field_required': 'الحقل %s مطلوب',
       // Notifications
       'today': 'اليوم',
       'mark_all_read': 'تحديد الكل كمقروء',
@@ -213,10 +344,43 @@ class AppLocalizations {
       'login': 'تسجيل الدخول',
       'or': 'أو',
       'login_with_google': 'تسجيل الدخول بجوجل',
+      'enter_credentials_login':
+          'أدخل بيانات الاعتماد لتسجيل الدخول إلى التطبيق.',
 
       // Sign Up
       'sign_up': 'إنشاء حساب',
       'already_have_account': 'هل لديك حساب بالفعل؟ ',
+      'fill_fields_create_account': 'املأ الحقول التالية لإنشاء حسابك.',
+      // Forget Password
+      'forget_password_title': 'نسيت كلمة المرور',
+      'forget_password_description':
+          'هل نسيت كلمة المرور؟ لا تقلق — سنساعدك.\n أدخل بريدك الإلكتروني وسنرسل لك رمز إعادة التعيين.',
+
+      // Feedback
+      'feedback_title': 'التعليقات',
+      'create_feedback': 'إنشاء تعليق',
+      'view_feedbacks': 'عرض التعليقات',
+      'create_new_feedback': 'إنشاء تعليق جديد',
+      'update_feedback': 'تحديث التعليق',
+      'rating_1_5': 'التقييم (1-5 نجوم)',
+      'scale_1_10': 'المقياس (1-10)',
+      'selected': 'المحدد',
+      'feedback_content': 'محتوى التعليق',
+      'enter_feedback_hint': 'أدخل تعليقك هنا...',
+      'please_enter_feedback': 'يرجى إدخال تعليقك',
+      'processing': 'جارٍ المعالجة...',
+      'submit_feedback': 'إرسال التعليق',
+      'update_feedback_button': 'تحديث التعليق',
+      'cancel_update': 'إلغاء التحديث',
+      'all_feedbacks': 'جميع التعليقات',
+      'search': 'بحث',
+      'no_feedbacks_found': 'لا توجد تعليقات',
+      'created': 'تاريخ الإنشاء',
+      'delete_feedback': 'حذف التعليق',
+      'delete_feedback_confirm': 'هل أنت متأكد أنك تريد حذف هذا التعليق؟',
+      'feedback_created_successfully': 'تم إنشاء التعليق بنجاح!',
+      'feedback_updated_successfully': 'تم تحديث التعليق بنجاح!',
+      'feedback_deleted_successfully': 'تم حذف التعليق بنجاح!',
 
       // General
       'search_customers': 'البحث عن العملاء',
@@ -279,6 +443,18 @@ class AppLocalizations {
 
       // Profile Screen
       'name': 'الاسم',
+      // Validation and forms
+      'email_required': 'البريد الإلكتروني مطلوب',
+      'enter_valid_email': 'يرجى إدخال بريد إلكتروني صالح',
+      'password_required': 'كلمة المرور مطلوبة',
+      'enter_email': 'أدخل البريد الإلكتروني',
+      // OTP / Email verification
+      'confirm_email_title': 'تأكيد البريد',
+      'otp_sent_description':
+          'لقد أرسلنا رمز تحقق مكون من 6 أرقام إلى بريدك الإلكتروني. يرجى إدخال الرمز أدناه لتأكيد حسابك.',
+      'verify_otp': 'تحقق من الرمز',
+      'resend_otp': 'إعادة إرسال الرمز',
+      'enter_complete_otp': 'يرجى إدخال رمز التحقق المؤلف من 6 أرقام بالكامل',
     },
   };
 

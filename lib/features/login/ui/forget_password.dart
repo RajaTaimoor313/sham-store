@@ -8,6 +8,7 @@ import 'package:flutter_shamstore/features/login/ui/widgets/forget_form.dart';
 import 'package:flutter_shamstore/features/auth/logic/auth_bloc.dart';
 import 'package:flutter_shamstore/core/di/service_locator.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_shamstore/core/localization/localization_helper.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -57,7 +58,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Forget\n',
+                            text: context.tr('forget_password_title') + '\n',
                             style: TextStyle(
                               color: ColorsManager.mainBlue,
                               fontSize: 40.sp,
@@ -65,7 +66,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                             ),
                           ),
                           TextSpan(
-                            text: 'Password',
+                            text: '',
                             style: TextStyle(
                               color: ColorsManager.mainOrange,
                               fontSize: 40.sp,
@@ -83,7 +84,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   Padding(
                     padding: EdgeInsets.only(left: 8.w),
                     child: Text(
-                      'Forgot your password? Dont worry — weve got you.\n Enter your email and we will send you a reset code.',
+                      context.tr('forget_password_description'),
                       style: TextStyle(
                         color: ColorsManager.mainGrey,
                         fontSize: 16.sp,

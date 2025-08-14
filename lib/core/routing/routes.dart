@@ -20,4 +20,5 @@ class Routes {
   static const String notificationSettingsScreen =
       '/notificationSettingsScreen';
   static const String enterResetCode = '/enterResetCode';
+  static const String feedbackScreen = '/feedbackScreen';
 }

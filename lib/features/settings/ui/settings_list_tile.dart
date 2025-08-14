@@ -56,6 +56,10 @@ class _SettingsListTileState extends State<SettingsListTile> {
               title: context.tr('change_password'),
               icon: Icons.lock_outline,
             ),
+            _buildTile(
+              title: context.tr('feedback'),
+              icon: Icons.feedback_outlined,
+            ),
 
             ListTile(
               title: Text(
@@ -270,6 +274,8 @@ class _SettingsListTileState extends State<SettingsListTile> {
             context,
             MaterialPageRoute(builder: (_) => MyProfile()),
           );
+        } else if (title == context.tr('feedback')) {
+          Navigator.pushNamed(context, Routes.feedbackScreen);
         }
       },
     );

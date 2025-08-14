@@ -56,7 +56,10 @@ class OrderRepository {
         if (coupon != null) 'coupon': coupon,
       };
 
-      final response = await _apiService.post('/api/order', body: data);
+      final response = await _apiService.post(
+        ApiConstants.createOrder,
+        body: data,
+      );
 
       print('Place order response: ${response.data}');
 
@@ -66,8 +69,8 @@ class OrderRepository {
         return ApiResponse.success(order);
       }
 
-      print('Order placement failed: ${response.message}');
-      return ApiResponse.error(response.message ?? 'Order placement failed');
+      print('Order placement failed: ${response.error}');
+      return ApiResponse.error(response.error ?? 'Order placement failed');
     } catch (e) {
       print('Order placement error: ${e.toString()}');
       return ApiResponse.error('Order placement failed: ${e.toString()}');
@@ -244,7 +247,7 @@ class OrderRepository {
 
   // Search orders
   Future<ApiResponse<PaginatedResponse<Order>>> searchOrders({
-    required String query,
+    required String searchTerm,
     int page = 1,
     int limit = 10,
     String? status,
@@ -253,7 +256,6 @@ class OrderRepository {
   }) async {
     try {
       final queryParams = {
-        'q': query,
         'page': page.toString(),
         'limit': limit.toString(),
         if (status != null) 'status': status,
@@ -262,7 +264,7 @@ class OrderRepository {
       };
 
       final response = await _apiService.get(
-        ApiConstants.searchOrders,
+        '${ApiConstants.searchOrders}/$searchTerm',
         queryParams: queryParams,
       );
 
@@ -478,6 +480,98 @@ class OrderRepository {
       );
     } catch (e) {
       return ApiResponse.error('Failed to mark as delivered: ${e.toString()}');
+    }
+  }
+
+  // Get all orders with pagination (GET /api/order)
+  Future<ApiResponse<PaginatedResponse<Order>>> getOrders({
+    int page = 1,
+    int limit = 10,
+    String? status,
+    String? sortBy,
+    String? sortOrder,
+  }) async {
+    try {
+      final queryParams = {
+        'page': page.toString(),
+        'limit': limit.toString(),
+        if (status != null) 'status': status,
+        if (sortBy != null) 'sort_by': sortBy,
+        if (sortOrder != null) 'sort_order': sortOrder,
+      };
+
+      final response = await _apiService.get(
+        ApiConstants.orders,
+        queryParams: queryParams,
+      );
+
+      if (response.isSuccess && response.data != null) {
+        final paginatedResponse = PaginatedResponse<Order>.fromJson(
+          response.data!,
+          (json) => Order.fromJson(json),
+        );
+        return ApiResponse.success(paginatedResponse);
+      }
+
+      return ApiResponse.error(response.message ?? 'Failed to fetch orders');
+    } catch (e) {
+      return ApiResponse.error('Failed to fetch orders: ${e.toString()}');
+    }
+  }
+
+  // Update order (PUT /api/order/:id)
+  Future<ApiResponse<Order>> updateOrder({
+    required String orderId,
+    String? status,
+    String? shippingAddress,
+    String? billingAddress,
+    String? paymentMethod,
+    String? paymentStatus,
+    String? notes,
+    DateTime? deliveryDate,
+  }) async {
+    try {
+      final data = <String, dynamic>{};
+
+      if (status != null) data['status'] = status;
+      if (shippingAddress != null) data['shipping_address'] = shippingAddress;
+      if (billingAddress != null) data['billing_address'] = billingAddress;
+      if (paymentMethod != null) data['payment_method'] = paymentMethod;
+      if (paymentStatus != null) data['payment_status'] = paymentStatus;
+      if (notes != null) data['notes'] = notes;
+      if (deliveryDate != null)
+        data['delivery_date'] = deliveryDate.toIso8601String();
+
+      final response = await _apiService.put(
+        '${ApiConstants.updateOrder}/$orderId',
+        body: data,
+      );
+
+      if (response.isSuccess && response.data != null) {
+        final order = Order.fromJson(response.data!);
+        return ApiResponse.success(order);
+      }
+
+      return ApiResponse.error(response.message ?? 'Failed to update order');
+    } catch (e) {
+      return ApiResponse.error('Failed to update order: ${e.toString()}');
+    }
+  }
+
+  // Delete order (DELETE /api/order/:id)
+  Future<ApiResponse<bool>> deleteOrder(String orderId) async {
+    try {
+      final response = await _apiService.delete(
+        '${ApiConstants.deleteOrder}/$orderId',
+      );
+
+      if (response.isSuccess) {
+        return ApiResponse.success(true);
+      }
+
+      return ApiResponse.error(response.message ?? 'Failed to delete order');
+    } catch (e) {
+      return ApiResponse.error('Failed to delete order: ${e.toString()}');
     }
   }
 }

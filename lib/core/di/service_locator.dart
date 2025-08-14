@@ -4,8 +4,11 @@ import '../helpers/storage_helper.dart';
 import '../repositories/auth_repository.dart';
 import '../repositories/cart_repository.dart';
 import '../repositories/order_repository.dart';
+import '../repositories/order_item_repository.dart';
 import '../repositories/payment_repository.dart';
+import '../repositories/feedback_repository.dart';
 import '../../features/categories/data/category_repository.dart';
+import '../../features/feedback/bloc/feedback_bloc.dart';
 import '../../features/categories/data/product_repository.dart';
 import '../../features/auth/logic/auth_bloc.dart';
 import '../../features/orders/logic/order_bloc.dart';
@@ -25,7 +28,9 @@ class ServiceLocator {
     sl.registerLazySingleton<AuthRepository>(() => AuthRepository());
     sl.registerLazySingleton<CartRepository>(() => CartRepository());
     sl.registerLazySingleton<OrderRepository>(() => OrderRepository());
+    sl.registerLazySingleton<OrderItemRepository>(() => OrderItemRepository());
     sl.registerLazySingleton<PaymentRepository>(() => PaymentRepository());
+    sl.registerLazySingleton<FeedbackRepository>(() => FeedbackRepository());
     sl.registerLazySingleton<CategoryRepository>(() => CategoryRepository());
     sl.registerLazySingleton<ProductRepository>(() => ProductRepository());
 
@@ -33,6 +38,9 @@ class ServiceLocator {
     sl.registerFactory<AuthBloc>(() => AuthBloc());
     sl.registerFactory<OrderBloc>(
       () => OrderBloc(orderRepository: sl<OrderRepository>()),
+    );
+    sl.registerFactory<FeedbackBloc>(
+      () => FeedbackBloc(sl<FeedbackRepository>()),
     );
 
     // Initialize auth state

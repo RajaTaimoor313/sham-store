@@ -8,6 +8,7 @@ import 'package:flutter_shamstore/core/themina/font_weight_help.dart';
 import 'package:flutter_shamstore/core/widgets/app_text_form_field.dart';
 import 'package:flutter_shamstore/core/widgets/text_button.dart';
 import 'package:flutter_shamstore/features/auth/logic/auth_bloc.dart';
+import 'package:flutter_shamstore/core/localization/localization_helper.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -25,22 +26,22 @@ class _LoginFormState extends State<LoginForm> {
   // Email validation function
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Email is required';
+      return context.tr('email_required');
     }
-    
+
     // Email format validation using RegExp
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!emailRegex.hasMatch(value)) {
-      return 'Please enter a valid email address';
+      return context.tr('enter_valid_email');
     }
-    
+
     return null;
   }
 
   // Password validation function
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Password is required';
+      return context.tr('password_required');
     }
     return null;
   }
@@ -85,10 +86,7 @@ class _LoginFormState extends State<LoginForm> {
         } else if (state is AuthError) {
           // Show error message
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.red,
-            ),
+            SnackBar(content: Text(state.message), backgroundColor: Colors.red),
           );
         }
       },
@@ -98,20 +96,20 @@ class _LoginFormState extends State<LoginForm> {
           children: [
             verticalspace(15),
             AppTextFormField(
-              labelText: 'Email',
+              labelText: context.tr('email'),
               controller: emailController,
               prefixIcon: const Icon(Icons.email),
-              hintText: 'Enter Email',
+              hintText: context.tr('enter_email'),
               validator: _validateEmail,
               keyboardType: TextInputType.emailAddress,
             ),
             verticalspace(15),
             AppTextFormField(
-              labelText: 'Password',
+              labelText: context.tr('new_password'),
               controller: passwordController,
               prefixIcon: const Icon(Icons.lock),
               isObscureText: true,
-              hintText: 'Enter Password',
+              hintText: context.tr('enter_new_password'),
               validator: _validatePassword,
             ),
             verticalspace(16.h),
@@ -124,7 +122,7 @@ class _LoginFormState extends State<LoginForm> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    'Forget Password?',
+                    context.tr('forget_password_title') + '?',
                     style: TextStyle(
                       fontSize: 16.sp,
                       color: ColorsManager.mainBlue,
@@ -150,7 +148,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               child: AppTextButton(
                 onPressed: _isLoading ? null : _handleLogin,
-                buttonText: _isLoading ? '' : 'Login',
+                buttonText: _isLoading ? '' : context.tr('login'),
                 backgroundColor: ColorsManager.mainBlue,
                 textStyle: TextStyle(
                   fontWeight: FontWeightHelper.medium,

@@ -7,6 +7,7 @@ import 'package:flutter_shamstore/core/helpers/spacing.dart';
 import 'package:flutter_shamstore/core/themina/colors.dart';
 import 'package:flutter_shamstore/features/auth/logic/auth_bloc.dart';
 import 'package:flutter_shamstore/core/routing/routes.dart';
+import 'package:flutter_shamstore/core/localization/localization_helper.dart';
 
 class ConfirmEmail extends StatefulWidget {
   const ConfirmEmail({super.key});
@@ -16,7 +17,10 @@ class ConfirmEmail extends StatefulWidget {
 }
 
 class _ConfirmEmailState extends State<ConfirmEmail> {
-  final List<TextEditingController> _otpControllers = List.generate(6, (index) => TextEditingController());
+  final List<TextEditingController> _otpControllers = List.generate(
+    6,
+    (index) => TextEditingController(),
+  );
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
   Timer? _timer;
   int _secondsRemaining = 60;
@@ -69,7 +73,6 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
     }
   }
 
-
   String _getOtpCode() {
     return _otpControllers.map((controller) => controller.text).join();
   }
@@ -80,8 +83,8 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
       context.read<AuthBloc>().add(AuthVerifyOtpRequested(otp: otpCode));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter the complete 6-digit OTP'),
+        SnackBar(
+          content: Text(context.tr('enter_complete_otp')),
           backgroundColor: Colors.red,
         ),
       );
@@ -142,7 +145,7 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Confirm\n',
+                            text: context.tr('confirm_email_title') + '\n',
                             style: TextStyle(
                               color: ColorsManager.mainBlue,
                               fontSize: 40.sp,
@@ -150,7 +153,7 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
                             ),
                           ),
                           TextSpan(
-                            text: 'Mail!',
+                            text: '',
                             style: TextStyle(
                               color: ColorsManager.mainOrange,
                               fontSize: 40.sp,
@@ -168,7 +171,7 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
                   Padding(
                     padding: EdgeInsets.only(left: 8.w),
                     child: Text(
-                      'We\'ve sent a 6-digit OTP to your email. Please enter the code below to verify your account.',
+                      context.tr('otp_sent_description'),
                       style: TextStyle(
                         color: ColorsManager.mainGrey,
                         fontSize: 16.sp,
@@ -223,9 +226,12 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
                             _onOtpChanged(value, index);
                           },
                           onTap: () {
-                            _otpControllers[index].selection = TextSelection.fromPosition(
-                              TextPosition(offset: _otpControllers[index].text.length),
-                            );
+                            _otpControllers[index].selection =
+                                TextSelection.fromPosition(
+                                  TextPosition(
+                                    offset: _otpControllers[index].text.length,
+                                  ),
+                                );
                           },
                         ),
                       );
@@ -255,11 +261,13 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
                                   height: 20.h,
                                   child: const CircularProgressIndicator(
                                     strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white,
+                                    ),
                                   ),
                                 )
                               : Text(
-                                  'Verify OTP',
+                                  context.tr('verify_otp'),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16.sp,
@@ -291,7 +299,7 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
                         TextButton(
                           onPressed: _canResend ? _resendOtp : null,
                           child: Text(
-                            'Resend OTP',
+                            context.tr('resend_otp'),
                             style: TextStyle(
                               color: _canResend
                                   ? ColorsManager.mainBlue

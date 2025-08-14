@@ -17,6 +17,10 @@ import 'package:flutter_shamstore/features/sign_up/ui/confirm_email.dart';
 import 'package:flutter_shamstore/examples/add_to_cart_example.dart';
 import 'package:flutter_shamstore/examples/view_cart_example.dart';
 import 'package:flutter_shamstore/examples/add_to_cart_complete_example.dart';
+import 'package:flutter_shamstore/features/feedback/screens/feedback_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_shamstore/core/di/service_locator.dart';
+import 'package:flutter_shamstore/features/feedback/bloc/feedback_bloc.dart';
 import 'package:flutter_shamstore/features/notifications/ui/screens/notifications_screen.dart';
 import 'package:flutter_shamstore/features/notifications/ui/screens/notification_settings_screen.dart';
 import 'package:flutter_shamstore/features/login/ui/enter_reset_code.dart';
@@ -78,6 +82,17 @@ class AppRouter {
             final args = settings.arguments as Map<String, String>;
             return EnterResetCode(email: args['email']!);
           },
+        );
+      case Routes.feedbackScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<FeedbackBloc>(
+            create: (_) {
+              // ignore: avoid_print
+              print('[AppRouter] Creating FeedbackBloc for FeedbackScreen');
+              return sl<FeedbackBloc>();
+            },
+            child: const FeedbackScreen(),
+          ),
         );
 
       default:

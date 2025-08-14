@@ -37,7 +37,14 @@ class _MyCartScreenState extends State<MyCartScreen> {
             centerTitle: true,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                // Navigate to home screen instead of sign up
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/navigationMenu',
+                  (route) => false,
+                );
+              },
             ),
             actions: [
               TextButton(
@@ -144,7 +151,9 @@ class _CartItemListState extends State<_CartItemList> {
                   final removedItem = item;
 
                   // Call the API to remove the item from cart
-                  context.read<CartBloc>().add(RemoveCartItem(id: removedItem.id));
+                  context.read<CartBloc>().add(
+                    RemoveCartItem(id: removedItem.id),
+                  );
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -308,10 +317,7 @@ class _CartItemListState extends State<_CartItemList> {
                     child: Icon(Icons.remove_circle_outline, size: 18.sp),
                   ),
                   SizedBox(width: 4.w),
-                  Text(
-                    '${item.quantity}',
-                    style: TextStyle(fontSize: 13.sp),
-                  ),
+                  Text('${item.quantity}', style: TextStyle(fontSize: 13.sp)),
                   SizedBox(width: 4.w),
                   InkWell(
                     onTap: () {

@@ -5,6 +5,7 @@ import 'package:flutter_shamstore/core/routing/routes.dart';
 import 'package:flutter_shamstore/core/themina/colors.dart';
 import 'package:flutter_shamstore/core/themina/font_weight_help.dart';
 import 'package:flutter_shamstore/core/widgets/text_button.dart';
+import 'package:flutter_shamstore/core/localization/localization_helper.dart';
 
 class LoginButton extends StatelessWidget {
   const LoginButton({super.key});
@@ -15,17 +16,16 @@ class LoginButton extends StatelessWidget {
       children: [
         AppTextButton(
           onPressed: () {
-            
             Navigator.pushNamed(context, Routes.navigationMenu);
           },
-          buttonText: 'Login',
+          buttonText: context.tr('login'),
           textStyle: TextStyle(
             fontWeight: FontWeightHelper.medium,
             color: ColorsManager.mainWhite,
             fontSize: 20.sp,
           ),
         ),
-       
+
         verticalspace(32.h),
 
         // خط منقط وكلمة OR
@@ -41,7 +41,7 @@ class LoginButton extends StatelessWidget {
               ),
             ),
             Text(
-              'OR',
+              context.tr('or'),
               style: TextStyle(
                 fontSize: 14.sp,
                 color: Colors.grey,

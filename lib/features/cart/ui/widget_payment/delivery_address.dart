@@ -6,6 +6,7 @@ import 'package:flutter_shamstore/core/themina/font_weight_help.dart';
 import 'package:flutter_shamstore/core/widgets/app_text_form_field.dart';
 import 'package:flutter_shamstore/core/widgets/text_button.dart';
 import 'package:flutter_shamstore/features/cart/ui/widget_payment/payment.dart';
+import 'package:flutter_shamstore/core/localization/localization_helper.dart';
 
 class DeliveryAddress extends StatelessWidget {
   const DeliveryAddress({super.key});
@@ -16,7 +17,7 @@ class DeliveryAddress extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: ColorsManager.mainWhite,
         title: Text(
-          'Delivery Address',
+          context.tr('delivery_address'),
           style: TextStyle(color: ColorsManager.mainBlue),
         ),
         centerTitle: true,
@@ -34,7 +35,7 @@ class DeliveryAddress extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Add or select your delivery address to receive your order on time.',
+                    context.tr('delivery_address_description'),
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 14.sp,
@@ -42,23 +43,23 @@ class DeliveryAddress extends StatelessWidget {
                   ),
                   verticalspace(36.h),
                   AppTextFormField(
-                    labelText: 'State',
-                    hintText: 'Enter Your State',
+                    labelText: context.tr('state'),
+                    hintText: context.tr('enter_state'),
                   ),
                   verticalspace(15.h),
                   AppTextFormField(
-                    labelText: 'City',
-                    hintText: 'Enter Your City',
+                    labelText: context.tr('city'),
+                    hintText: context.tr('enter_city'),
                   ),
                   verticalspace(15.h),
                   AppTextFormField(
-                    labelText: 'Town',
-                    hintText: 'Enter Your Town',
+                    labelText: context.tr('town'),
+                    hintText: context.tr('enter_town'),
                   ),
                   verticalspace(15.h),
                   AppTextFormField(
-                    labelText: 'Street No',
-                    hintText: 'Enter Your Street No',
+                    labelText: context.tr('street_no'),
+                    hintText: context.tr('enter_street_no'),
                   ),
                   verticalspace(30.h),
                   Center(
@@ -71,7 +72,7 @@ class DeliveryAddress extends StatelessWidget {
                           ),
                         );
                       },
-                      buttonText: 'Save Address',
+                      buttonText: context.tr('save_address'),
                       textStyle: TextStyle(
                         fontWeight: FontWeightHelper.medium,
                         color: ColorsManager.mainWhite,

@@ -42,7 +42,8 @@ class ApiConstants {
   // Product Pricing Tier endpoints
   static const String productPricingTier = '/api/productpricingtier';
   static const String allProductPricingTiers = '/api/all_productpricingtiers';
-  static const String searchProductPricingTier = '/api/search_productpricingtier';
+  static const String searchProductPricingTier =
+      '/api/search_productpricingtier';
 
   // Product Shipping endpoints
   static const String productShipping = '/api/productshipping';
@@ -50,15 +51,16 @@ class ApiConstants {
   static const String searchProductShipping = '/api/search_productshipping';
 
   // Order endpoints
-  static const String orders = '/order';
-  static const String createOrder = '/order';
+  static const String orders = '/api/order';
+  static const String createOrder = '/api/order';
   static const String allOrders = '/api/all_orders';
-  static const String searchOrders = '/search_order';
+  static const String searchOrders = '/api/search_order';
   static const String myOrders = '/orders';
   static const String myOrdersApi = '/api/my_orders';
   static const String userOrders = '/user/orders';
-  static const String getOrder = '/order';
-  static const String updateOrder = '/order';
+  static const String getOrder = '/api/order';
+  static const String updateOrder = '/api/order';
+  static const String deleteOrder = '/api/order';
   static const String cancelOrder = '/order/cancel';
   static const String trackOrder = '/track_order';
   static const String deliveredOrders = '/orders/delivered';
@@ -68,30 +70,40 @@ class ApiConstants {
   static const String markDelivered = '/order/mark-delivered';
 
   // Order Item endpoints
-  static const String orderItems = '/orderitem';
-  static const String allOrderItems = '/all_orderitems';
-  static const String searchOrderItems = '/search_orderitem';
+  static const String orderItems = '/api/orderitem';
+  static const String allOrderItems = '/api/all_orderitems';
+  static const String searchOrderItems = '/api/search_orderitem';
+  static const String createOrderItem = '/api/orderitem';
+  static const String getOrderItem = '/api/orderitem';
+  static const String updateOrderItem = '/api/orderitem';
+  static const String deleteOrderItem = '/api/orderitem';
 
   // Payment endpoints
-  static const String payments = '/payment';
+  static const String payments = '/api/payment';
+  static const String getPayment = '/api/payment';
+  static const String createPayment = '/api/payment';
+  static const String updatePayment = '/api/payment';
+  static const String deletePayment = '/api/payment';
+  static const String allPayments = '/api/all_payments';
+  static const String searchPayments = '/api/search_payment';
   static const String processPayment = '/payment/process';
   static const String refundPayment = '/payment/refund';
   static const String paymentStatistics = '/payment/statistics';
   static const String myPayments = '/my_payment';
-  static const String searchPayments = '/search_payment';
-  static const String getPayment = '/payment';
   static const String userPayments = '/user/payments';
 
   // Payment Method endpoints
-  static const String paymentMethods = '/paymentmethod';
-  static const String addPaymentMethod = '/paymentmethod';
-  static const String updatePaymentMethod = '/paymentmethod';
-  static const String deletePaymentMethod = '/paymentmethod';
-  static const String allPaymentMethods = '/all_paymentmethods';
+  static const String paymentMethods = '/api/paymentmethod';
+  static const String getPaymentMethod = '/api/paymentmethod';
+  static const String createPaymentMethod = '/api/paymentmethod';
+  static const String updatePaymentMethod = '/api/paymentmethod';
+  static const String deletePaymentMethod = '/api/paymentmethod';
+  static const String allPaymentMethods = '/api/all_paymentmethods';
+  static const String searchPaymentMethods = '/api/search_paymentmethod';
+  static const String addPaymentMethod = '/api/paymentmethod';
   static const String myPaymentMethods = '/my_payment_methode';
   static const String validatePaymentMethod = '/payment-method/validate';
   static const String setDefaultPaymentMethod = '/payment-method/default';
-  static const String searchPaymentMethods = '/search_paymentmethod';
 
   // Payment Schedule endpoints
   static const String paymentSchedules = '/payment-schedule';
@@ -141,7 +153,8 @@ class ApiConstants {
   static const String allNotificationSettings = '/api/all_notificationsettings';
   static const String searchNotificationSettings =
       '/api/search_notificationsetting';
-  static const String markNotificationsAsRead = '/api/notifications/mark-as-read';
+  static const String markNotificationsAsRead =
+      '/api/notifications/mark-as-read';
 
   // Business Settings endpoints
   static const String businessSettings = '/businesssetting';
@@ -175,20 +188,28 @@ class ApiConstants {
   static const String deliveredOrder = '/admin/driver/delivered_order';
 
   // Feedback endpoints
-  static const String feedbacks = '/feedbacks';
-  static const String searchFeedbacks = '/feedbacks/search';
+  static const String feedbacks = '/api/feedbacks';
+  static const String allFeedbacks = '/api/feedbacks/all';
+  static const String searchFeedbacks = '/api/feedbacks/search';
+  static const String feedbackById =
+      '/api/feedbacks'; // GET /api/feedbacks/{id}
+  static const String updateFeedback =
+      '/api/feedbacks'; // PUT /api/feedbacks/{id}
+  static const String deleteFeedback =
+      '/api/feedbacks'; // DELETE /api/feedbacks/{id}
 
   // Broadcasting
   static const String broadcastingAuth = '/broadcasting/auth';
 
   // Cart endpoints
-  static const String carts = '/api/carts';  // POST, GET
-  static const String allCarts = '/api/carts/all';  // GET
-  static const String cartById = '/api/carts';  // GET /api/carts/{id}
-  static const String updateCart = '/api/carts';  // PUT /api/carts/{id}
-  static const String deleteCart = '/api/carts';  // DELETE /api/carts/{id}
-  static const String searchCarts = '/api/carts/search';  // GET /api/carts/search/{query}
-  
+  static const String carts = '/api/carts'; // POST, GET
+  static const String allCarts = '/api/carts/all'; // GET
+  static const String cartById = '/api/carts'; // GET /api/carts/{id}
+  static const String updateCart = '/api/carts'; // PUT /api/carts/{id}
+  static const String deleteCart = '/api/carts'; // DELETE /api/carts/{id}
+  static const String searchCarts =
+      '/api/carts/search'; // GET /api/carts/search/{query}
+
   // Legacy cart endpoints (keeping for backward compatibility)
   static const String cart = '/api/carts/all';
   static const String addToCart = '/api/carts';

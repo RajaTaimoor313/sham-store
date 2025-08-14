@@ -5,6 +5,7 @@ import 'package:flutter_shamstore/core/themina/colors.dart';
 import 'package:flutter_shamstore/features/onboarding/ui/build_page_indicator.dart';
 import 'package:flutter_shamstore/features/sign_up/sign_up_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_shamstore/core/localization/localization_helper.dart';
 
 class OnBoarding1 extends StatelessWidget {
   const OnBoarding1({super.key});
@@ -30,7 +31,7 @@ class OnBoarding1 extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      'Skip',
+                      context.tr('skip'),
                       style: TextStyle(
                         color: ColorsManager.mainBlue,
                         fontSize: 20,
@@ -54,10 +55,19 @@ class OnBoarding1 extends StatelessWidget {
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
                   children: [
-                    TextSpan(text: 'Shop All ', style: TextStyle(color: ColorsManager.mainBlue)),
-                    TextSpan(text: 'You Need', style: TextStyle(color: ColorsManager.mainOrange)),
+                    TextSpan(
+                      text: context.tr('onboarding1_title_part1') + ' ',
+                      style: TextStyle(color: ColorsManager.mainBlue),
+                    ),
+                    TextSpan(
+                      text: context.tr('onboarding1_title_part2'),
+                      style: TextStyle(color: ColorsManager.mainOrange),
+                    ),
                   ],
                 ),
               ),
@@ -65,9 +75,13 @@ class OnBoarding1 extends StatelessWidget {
               verticalspace(20.h),
 
               Text(
-                'Browse groceries, essentials, and more — all in\n one place.',
+                context.tr('onboarding1_subtitle'),
                 textAlign: TextAlign.center,
-                style: TextStyle(color: ColorsManager.mainBlack, fontSize: 16, height: 1.5),
+                style: TextStyle(
+                  color: ColorsManager.mainBlack,
+                  fontSize: 16,
+                  height: 1.5,
+                ),
               ),
 
               const Spacer(flex: 3),
@@ -85,7 +99,7 @@ class OnBoarding1 extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      'Next',
+                      context.tr('next'),
                       style: TextStyle(
                         color: ColorsManager.mainBlue,
                         fontSize: 20,
@@ -128,7 +142,7 @@ class OnBoarding2 extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      'Skip',
+                      context.tr('skip'),
                       style: TextStyle(
                         color: ColorsManager.mainBlue,
                         fontSize: 20,
@@ -152,10 +166,19 @@ class OnBoarding2 extends StatelessWidget {
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
                   children: [
-                    TextSpan(text: 'Big Deals, ', style: TextStyle(color: ColorsManager.mainBlue)),
-                    TextSpan(text: 'Small Prices', style: TextStyle(color: ColorsManager.mainOrange)),
+                    TextSpan(
+                      text: context.tr('onboarding2_title_part1') + ' ',
+                      style: TextStyle(color: ColorsManager.mainBlue),
+                    ),
+                    TextSpan(
+                      text: context.tr('onboarding2_title_part2'),
+                      style: TextStyle(color: ColorsManager.mainOrange),
+                    ),
                   ],
                 ),
               ),
@@ -163,9 +186,13 @@ class OnBoarding2 extends StatelessWidget {
               verticalspace(20.h),
 
               Text(
-                'Save more every day with exclusive discounts\n and bundles.',
+                context.tr('onboarding2_subtitle'),
                 textAlign: TextAlign.center,
-                style: TextStyle(color: ColorsManager.mainBlack, fontSize: 16, height: 1.5),
+                style: TextStyle(
+                  color: ColorsManager.mainBlack,
+                  fontSize: 16,
+                  height: 1.5,
+                ),
               ),
 
               const Spacer(flex: 3),
@@ -180,7 +207,7 @@ class OnBoarding2 extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      'Previous',
+                      context.tr('previous'),
                       style: TextStyle(
                         color: ColorsManager.mainBlack,
                         fontSize: 20,
@@ -199,7 +226,7 @@ class OnBoarding2 extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      'Next',
+                      context.tr('next'),
                       style: TextStyle(
                         color: ColorsManager.mainBlue,
                         fontSize: 20,
@@ -242,7 +269,7 @@ class OnBoarding3 extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      'Skip',
+                      context.tr('skip'),
                       style: TextStyle(
                         color: ColorsManager.mainBlue,
                         fontSize: 20,
@@ -266,10 +293,19 @@ class OnBoarding3 extends StatelessWidget {
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
                   children: [
-                    TextSpan(text: 'Fast & Easy ', style: TextStyle(color: ColorsManager.mainBlue)),
-                    TextSpan(text: 'Delivery', style: TextStyle(color: ColorsManager.mainOrange)),
+                    TextSpan(
+                      text: context.tr('onboarding3_title_part1') + ' ',
+                      style: TextStyle(color: ColorsManager.mainBlue),
+                    ),
+                    TextSpan(
+                      text: context.tr('onboarding3_title_part2'),
+                      style: TextStyle(color: ColorsManager.mainOrange),
+                    ),
                   ],
                 ),
               ),
@@ -277,9 +313,13 @@ class OnBoarding3 extends StatelessWidget {
               verticalspace(16.h),
 
               Text(
-                'Your orders delivered quickly, safely, and on\n time.',
+                context.tr('onboarding3_subtitle'),
                 textAlign: TextAlign.center,
-                style: TextStyle(color: ColorsManager.mainBlack, fontSize: 16, height: 1.5),
+                style: TextStyle(
+                  color: ColorsManager.mainBlack,
+                  fontSize: 16,
+                  height: 1.5,
+                ),
               ),
 
               const Spacer(flex: 3),
@@ -294,7 +334,7 @@ class OnBoarding3 extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      'Previous',
+                      context.tr('previous'),
                       style: TextStyle(
                         color: ColorsManager.mainBlack,
                         fontSize: 20,
@@ -313,7 +353,7 @@ class OnBoarding3 extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      'Next',
+                      context.tr('next'),
                       style: TextStyle(
                         color: ColorsManager.mainBlue,
                         fontSize: 20,

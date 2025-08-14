@@ -7,6 +7,7 @@ import 'package:flutter_shamstore/core/repositories/auth_repository.dart';
 import 'package:flutter_shamstore/core/models/auth_model.dart';
 import 'package:flutter_shamstore/features/sign_up/ui/sign_up_button.dart';
 import 'package:flutter_shamstore/features/sign_up/ui/sign_up_form.dart';
+import 'package:flutter_shamstore/core/localization/localization_helper.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -105,7 +106,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Hello\n',
+                          text: context.tr('sign_up') + '\n',
                           style: TextStyle(
                             color: ColorsManager.mainBlue,
                             fontSize: 40.sp,
@@ -113,7 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         TextSpan(
-                          text: 'There!',
+                          text: '',
                           style: TextStyle(
                             color: ColorsManager.mainOrange,
                             fontSize: 40.sp,
@@ -131,7 +132,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 8.w),
                   child: Text(
-                    'Fill following fields to create your account.',
+                    context.tr('fill_fields_create_account'),
                     style: TextStyle(
                       color: ColorsManager.mainBlack,
                       fontSize: 16.sp,

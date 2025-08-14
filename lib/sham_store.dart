@@ -6,8 +6,9 @@ import 'package:flutter_shamstore/core/routing/routes.dart';
 import 'package:flutter_shamstore/core/themina/colors.dart';
 import 'package:flutter_shamstore/core/localization/language_bloc.dart';
 import 'package:flutter_shamstore/features/auth/logic/auth_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-class ShamStore extends StatefulWidget{
+class ShamStore extends StatefulWidget {
   final AppRouter appRouter;
   const ShamStore({super.key, required this.appRouter});
 
@@ -30,23 +31,34 @@ class _ShamStoreState extends State<ShamStore> {
     return BlocBuilder<LanguageBloc, LanguageState>(
       builder: (context, languageState) {
         return ScreenUtilInit(
-          designSize: const Size(375, 812), // حجم التصميم الأصلي (مثلاً iPhone X)
+          designSize: const Size(
+            375,
+            812,
+          ), // حجم التصميم الأصلي (مثلاً iPhone X)
           minTextAdapt: true,
           splitScreenMode: true,
           child: MaterialApp(
             title: "Sham Super Store",
             theme: ThemeData(
               primaryColor: ColorsManager.mainBlue,
-              scaffoldBackgroundColor: Colors.white
+              scaffoldBackgroundColor: Colors.white,
             ),
             debugShowCheckedModeBanner: false,
             initialRoute: Routes.onboarding1,
             onGenerateRoute: widget.appRouter.generateRoute,
             // Add locale and text direction support
-            locale: languageState is LanguageLoaded ? languageState.locale : const Locale('en'),
+            locale: languageState is LanguageLoaded
+                ? languageState.locale
+                : const Locale('en'),
+            supportedLocales: const [Locale('en'), Locale('ar')],
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
             builder: (context, child) {
-              final textDirection = languageState is LanguageLoaded 
-                  ? languageState.textDirection 
+              final textDirection = languageState is LanguageLoaded
+                  ? languageState.textDirection
                   : TextDirection.ltr;
               return Directionality(
                 textDirection: textDirection,
@@ -57,5 +69,5 @@ class _ShamStoreState extends State<ShamStore> {
         );
       },
     );
-  } 
+  }
 }

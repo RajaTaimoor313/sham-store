@@ -15,6 +15,7 @@ class AppTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
   final void Function(String)? onChanged;
+  final void Function(String)? onFieldSubmitted;
   const AppTextFormField({
     super.key,
     required this.hintText,
@@ -23,11 +24,12 @@ class AppTextFormField extends StatelessWidget {
     this.isObscureText = false,
     this.prefixIcon,
     this.suffixIcon,
-    this.borderRadius = 12.0, 
+    this.borderRadius = 12.0,
     this.maxLines,
     this.validator, // ✅ قيمة افتراضية
     this.keyboardType,
     this.onChanged,
+    this.onFieldSubmitted,
   });
 
   @override
@@ -52,10 +54,8 @@ class AppTextFormField extends StatelessWidget {
           validator: validator,
           keyboardType: keyboardType,
           onChanged: onChanged,
-          style: TextStyle(
-            fontSize: 16.sp,
-            color: ColorsManager.mainBlack,
-          ),
+          onFieldSubmitted: onFieldSubmitted,
+          style: TextStyle(fontSize: 16.sp, color: ColorsManager.mainBlack),
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(
@@ -74,24 +74,39 @@ class AppTextFormField extends StatelessWidget {
                     ),
                   )
                 : null,
-            prefixIconConstraints: BoxConstraints(minWidth: 40.w, minHeight: 40.h),
+            prefixIconConstraints: BoxConstraints(
+              minWidth: 40.w,
+              minHeight: 40.h,
+            ),
             suffixIcon: suffixIcon,
             filled: true,
             fillColor: ColorsManager.mainWhite,
-            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 14.h,
+            ),
 
             // ✅ استخدم borderRadius المرسل
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius.r),
-              borderSide: BorderSide(color: ColorsManager.mainGrey.withOpacity(0.3), width: 1.2),
+              borderSide: BorderSide(
+                color: ColorsManager.mainGrey.withOpacity(0.3),
+                width: 1.2,
+              ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius.r),
-              borderSide: BorderSide(color: ColorsManager.mainGrey.withOpacity(0.3), width: 1.2),
+              borderSide: BorderSide(
+                color: ColorsManager.mainGrey.withOpacity(0.3),
+                width: 1.2,
+              ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius.r),
-              borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 1.8),
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 1.8,
+              ),
             ),
           ),
         ),

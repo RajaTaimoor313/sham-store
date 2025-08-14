@@ -286,8 +286,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           ),
         );
       } else {
-        print('Order placement failed: ${response.message}');
-        emit(OrderError(message: response.message ?? 'Order placement failed'));
+        print('Order placement failed: ${response.error}');
+        emit(OrderError(message: response.error ?? 'Order placement failed'));
       }
     } catch (e) {
       print('Order placement error: ${e.toString()}');
@@ -416,7 +416,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     try {
       emit(OrderLoading());
       final response = await _orderRepository.searchOrders(
-        query: event.query,
+        searchTerm: event.query,
         page: event.page,
         limit: event.limit,
       );

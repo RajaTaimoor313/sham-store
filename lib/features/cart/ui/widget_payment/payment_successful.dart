@@ -5,6 +5,7 @@ import 'package:flutter_shamstore/core/themina/colors.dart';
 import 'package:flutter_shamstore/core/themina/font_weight_help.dart';
 import 'package:flutter_shamstore/core/widgets/text_button.dart';
 import 'package:flutter_shamstore/features/navigate/navigate_menu.dart';
+import 'package:flutter_shamstore/core/localization/localization_helper.dart';
 
 class PaymentSuccessful extends StatelessWidget {
   const PaymentSuccessful({super.key});
@@ -15,7 +16,7 @@ class PaymentSuccessful extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: ColorsManager.mainWhite,
         title: Text(
-          'Confirmation',
+          context.tr('confirmation'),
           style: TextStyle(color: ColorsManager.mainBlue),
         ),
         centerTitle: true,
@@ -47,7 +48,7 @@ class PaymentSuccessful extends StatelessWidget {
                   ),
                   verticalspace(20.h),
                   Text(
-                    'Payment Successful!',
+                    context.tr('payment_successful'),
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -56,7 +57,7 @@ class PaymentSuccessful extends StatelessWidget {
                   ),
                   verticalspace(10.h),
                   Text(
-                    'Your order has been placed and is being\n processed. Thank you for shopping with us.',
+                    context.tr('order_placed_message'),
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 16, color: Colors.black54),
                   ),
@@ -70,7 +71,7 @@ class PaymentSuccessful extends StatelessWidget {
                       //   ),
                       // );
                     },
-                    buttonText: 'Continue Shopping',
+                    buttonText: context.tr('continue_shopping'),
                     textStyle: TextStyle(
                       fontWeight: FontWeightHelper.medium,
                       color: ColorsManager.mainWhite,
@@ -82,11 +83,13 @@ class PaymentSuccessful extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const NavigationMenu()),
+                        MaterialPageRoute(
+                          builder: (_) => const NavigationMenu(),
+                        ),
                       );
                     },
                     backgroundColor: ColorsManager.mainWhite,
-                    buttonText: 'Back To Home',
+                    buttonText: context.tr('back_to_home'),
                     textStyle: TextStyle(
                       fontWeight: FontWeightHelper.medium,
                       color: ColorsManager.mainBlue,

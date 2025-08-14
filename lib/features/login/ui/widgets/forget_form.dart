@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shamstore/core/helpers/spacing.dart';
 import 'package:flutter_shamstore/core/widgets/app_text_form_field.dart';
+import 'package:flutter_shamstore/core/localization/localization_helper.dart';
 
 class ForgetForm extends StatefulWidget {
   final Function(String)? onEmailChanged;
   final Function(bool)? onFormValidityChanged;
-  
+
   const ForgetForm({
     super.key,
     this.onEmailChanged,
@@ -45,9 +46,9 @@ class ForgetFormState extends State<ForgetForm> {
           verticalspace(15),
           AppTextFormField(
             controller: emailController,
-            labelText: 'Email',
+            labelText: context.tr('email'),
             prefixIcon: const Icon(Icons.email),
-            hintText: 'Enter your email address',
+            hintText: context.tr('enter_email'),
             onChanged: (value) {
               widget.onEmailChanged?.call(value.trim());
               // Check form validity after email change
@@ -58,10 +59,12 @@ class ForgetFormState extends State<ForgetForm> {
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your email';
+                return context.tr('email_required');
               }
-              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-                return 'Please enter a valid email address';
+              if (!RegExp(
+                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+              ).hasMatch(value)) {
+                return context.tr('enter_valid_email');
               }
               return null;
             },
@@ -76,7 +79,7 @@ class ForgetFormState extends State<ForgetForm> {
   String get email {
     return emailController.text.trim();
   }
-  
+
   // Method to validate form for parent widget
   bool validateForm() {
     return formKey.currentState?.validate() ?? false;

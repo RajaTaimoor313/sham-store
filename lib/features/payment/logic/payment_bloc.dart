@@ -346,7 +346,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       emit(PaymentLoading());
       final response = await _paymentRepository.getPaymentMethods();
       if (response.isSuccess && response.data != null) {
-        emit(PaymentMethodsLoaded(paymentMethods: response.data!));
+        emit(PaymentMethodsLoaded(paymentMethods: response.data!.data));
       } else {
         emit(
           PaymentError(

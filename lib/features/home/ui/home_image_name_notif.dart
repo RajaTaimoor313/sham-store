@@ -50,129 +50,131 @@ class ImageNameNotif extends StatelessWidget {
                 languageState is LanguageLoaded &&
                 languageState.languageCode == 'ar';
 
-            return Row(
-              textDirection: isArabicMode
-                  ? TextDirection.rtl
-                  : TextDirection.ltr,
-              children: [
-                // الصورة الدائرية
-                Container(
-                  width: 53.w,
-                  height: 53.h,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey[300], // Fallback background color
-                  ),
-                  child: ClipOval(
-                    child: Image.network(
-                      avatarUrl,
-                      width: 53.w,
-                      height: 53.h,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        // Fallback widget when image fails to load
-                        return Container(
-                          width: 53.w,
-                          height: 53.h,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF0D8ABC),
-                          ),
-                          child: Icon(
-                            Icons.person,
-                            color: Colors.white,
-                            size: 30.w,
-                          ),
-                        );
-                      },
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Container(
-                          width: 53.w,
-                          height: 53.h,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey[300],
-                          ),
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Color(0xFF0D8ABC),
+            // Keep visual positions identical in both languages
+            return Directionality(
+              textDirection: TextDirection.ltr,
+              child: Row(
+                children: [
+                  // الصورة الدائرية
+                  Container(
+                    width: 53.w,
+                    height: 53.h,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey[300], // Fallback background color
+                    ),
+                    child: ClipOval(
+                      child: Image.network(
+                        avatarUrl,
+                        width: 53.w,
+                        height: 53.h,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          // Fallback widget when image fails to load
+                          return Container(
+                            width: 53.w,
+                            height: 53.h,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xFF0D8ABC),
+                            ),
+                            child: Icon(
+                              Icons.person,
+                              color: Colors.white,
+                              size: 30.w,
+                            ),
+                          );
+                        },
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Container(
+                            width: 53.w,
+                            height: 53.h,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey[300],
+                            ),
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Color(0xFF0D8ABC),
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
-                ),
 
-                horizontalspace(8.w), // مسافة بين الصورة والنصوص
-                // النصوص
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: isArabicMode
-                        ? CrossAxisAlignment.end
-                        : CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        context.tr(_getGreetingKey()),
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w200,
+                  horizontalspace(8.w), // مسافة بين الصورة والنصوص
+                  // النصوص
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          context.tr(_getGreetingKey()),
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w200,
+                          ),
+                          textDirection: isArabicMode
+                              ? TextDirection.rtl
+                              : TextDirection.ltr,
                         ),
-                        textDirection: isArabicMode
-                            ? TextDirection.rtl
-                            : TextDirection.ltr,
-                      ),
-                      //verticalspace(5.h),
-                      Text(
-                        userName.isNotEmpty
-                            ? userName
-                            : (languageState is LanguageLoaded &&
-                                      languageState.languageCode == 'ar'
-                                  ? 'مستخدم'
-                                  : 'User'),
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w500,
+                        //verticalspace(5.h),
+                        Text(
+                          userName.isNotEmpty
+                              ? userName
+                              : (languageState is LanguageLoaded &&
+                                        languageState.languageCode == 'ar'
+                                    ? 'مستخدم'
+                                    : 'User'),
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textDirection:
+                              userName.isNotEmpty &&
+                                  languageState is LanguageLoaded &&
+                                  languageState.languageCode == 'ar' &&
+                                  TextUtils.containsArabic(userName)
+                              ? TextDirection.rtl
+                              : TextDirection.ltr,
                         ),
-                        textDirection:
-                            userName.isNotEmpty &&
-                                languageState is LanguageLoaded &&
-                                languageState.languageCode == 'ar' &&
-                                TextUtils.containsArabic(userName)
-                            ? TextDirection.rtl
-                            : TextDirection.ltr,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
-                // زر الإشعارات
-                SizedBox(
-                  width: 25.w,
-                  height: 25.h,
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      // Show toast message
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Server problem is fetching Notification'),
-                          duration: Duration(seconds: 2),
-                          backgroundColor: Colors.orange,
-                        ),
-                      );
-                      
-                      // Navigate to notifications screen
-                      Navigator.pushNamed(context, Routes.notificationsScreen);
-                    },
-                    mini: true, // عشان يكون صغير
-                    child: Icon(Icons.notifications, size: 15.sp),
+                  // زر الإشعارات
+                  SizedBox(
+                    width: 25.w,
+                    height: 25.h,
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        // Show toast message
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(context.tr('notifications')),
+                            duration: const Duration(seconds: 2),
+                            backgroundColor: Colors.orange,
+                          ),
+                        );
+
+                        // Navigate to notifications screen
+                        Navigator.pushNamed(
+                          context,
+                          Routes.notificationsScreen,
+                        );
+                      },
+                      mini: true, // عشان يكون صغير
+                      child: Icon(Icons.notifications, size: 15.sp),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         );

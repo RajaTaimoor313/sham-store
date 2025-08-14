@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shamstore/core/helpers/spacing.dart';
 import 'package:flutter_shamstore/core/themina/colors.dart';
 import 'package:flutter_shamstore/features/login/ui/widgets/login_form.dart';
+import 'package:flutter_shamstore/core/localization/localization_helper.dart';
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
@@ -11,7 +13,8 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView( // ✅ حل overflow
+        child: SingleChildScrollView(
+          // ✅ حل overflow
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 14.w),
             child: Column(
@@ -26,7 +29,7 @@ class LoginScreen extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Welcome\n',
+                          text: context.tr('login') + '\n',
                           style: TextStyle(
                             color: ColorsManager.mainBlue,
                             fontSize: 40.sp,
@@ -34,7 +37,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: 'Back',
+                          text: '',
                           style: TextStyle(
                             color: ColorsManager.mainOrange,
                             fontSize: 40.sp,
@@ -52,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 8.w),
                   child: Text(
-                    'Enter credentials to login to the application.',
+                    context.tr('enter_credentials_login'),
                     style: TextStyle(
                       color: ColorsManager.mainGrey,
                       fontSize: 16.sp,
@@ -61,10 +64,10 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
 
-                verticalspace( 32.h),
-                 LoginForm(),
+                verticalspace(32.h),
+                LoginForm(),
                 // verticalspace(38.h), // مسافة سفليّة
-                //  LoginButton(), 
+                //  LoginButton(),
               ],
             ),
           ),
